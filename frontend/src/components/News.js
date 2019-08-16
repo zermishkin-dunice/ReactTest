@@ -1,8 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import Navigation from './Navigation'
-import New from './New'
-
+import Navigation from './Navigation';
+import New from './New';
+import store from './store';
+import {connect} from 'react-redux';
 
 class Container extends React.Component {
     constructor(props) {
@@ -17,20 +18,23 @@ class Container extends React.Component {
         axios.get('http://localhost:8000/get/news/')
           .then(res => {
             const news_ = res.data;
-            this.setState({
-                news: news_
-            });
+            store.dispatch({
+                type: "GET_NEWS",
+                news: news_,
+            })
+            
           })
       }
 
     render() {
         const {
             news,
-        } = this.state;
-        return ( 
+        } = this.props;
+        return (
             <div className="container">
                 <Navigation />
-                {
+                {   
+                    news &&
                     news.length !== 0 &&
                     news.map(item => (
                         <New key={item.id} title = {item.title} text={item.text}/>
@@ -42,4 +46,10 @@ class Container extends React.Component {
 }
 
 
-export default Container;
+const mapStateToProps = function(state){
+    return {
+        news: state.news
+    };
+}
+
+export default connect(mapStateToProps)(Container);
