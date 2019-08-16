@@ -1,9 +1,9 @@
 from django.urls import path
 from . import views
-from .views import GetNews, GetOneNew
+from .views import GetNews, GetOneNew, GetAuthor
 
 urlpatterns = [
-    path('', GetNews.as_view(), name='get_news'),
-    path('/<int:pk>', GetOneNew.as_view(), name='get_news'),
-    
+    path('news/', GetNews.as_view(), name='get_news'),
+    path('news/<int:pk>', GetOneNew.as_view(), name='get_new'),
+    path('author/<int:pk>', GetAuthor.as_view(), name='get_author'),
 ]

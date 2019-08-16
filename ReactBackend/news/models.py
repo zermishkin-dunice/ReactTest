@@ -13,6 +13,9 @@ class Authors(models.Model):
 
 class Tag(models.Model):
     tag = models.CharField(max_length = 80, null=False, verbose_name="Тэг")
+    class Meta:
+        verbose_name = "Тэг"
+        verbose_name_plural = "Тэги"
 
     def __str__(self):
         return self.tag
@@ -22,7 +25,7 @@ class New(models.Model):
     text = models.TextField(null=False, verbose_name="Текст")
     date = models.DateField(null=False, verbose_name="Дата")
     author = models.ForeignKey(Authors, on_delete="SET_NULL")
-    
+    #tag = models.ManyToManyField(Tag) Нихуя блять пока не работает 
     class Meta:
         verbose_name = "Новость"
         verbose_name_plural = "Новости"
