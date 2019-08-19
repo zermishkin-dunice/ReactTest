@@ -6,8 +6,7 @@ class New extends React.Component{
     constructor(props){
         super(props);
         this.state ={
-            title: "Дефолтный заголовок",
-            text: "Дефолтный текст",
+
         }
     }
     
@@ -22,8 +21,12 @@ class New extends React.Component{
             })
     }
 
-    render(){
+    componentDidMount() {
         this.get_author(this.props.id);
+       
+    }
+
+    render(){
         return(
         <div className="new border p-3 mt-3 rounded">
             <h1>{this.props.title}</h1>
