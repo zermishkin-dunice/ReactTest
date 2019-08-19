@@ -2,6 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import Navigation from './Navigation';
 import New from './New';
+import SearchForm from './SearchForm';
 import store from './store';
 import {connect} from 'react-redux';
 
@@ -33,11 +34,12 @@ class Container extends React.Component {
         return (
             <div className="container">
                 <Navigation />
+                <SearchForm />
                 {   
                     news &&
                     news.length !== 0 &&
                     news.map(item => (
-                        <New key={item.id} title = {item.title} text={item.text}/>
+                        <New key={item.id} title = {item.title} text={item.text} author={item.author} date={item.date}/>
                     ))
                 }
             </div>

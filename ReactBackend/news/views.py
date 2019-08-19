@@ -19,6 +19,7 @@ class GetOneNew(TemplateView):
         response = JsonResponse(json_of_new, safe=False)
         response['Access-Control-Allow-Origin'] = '*'
         return response
+
 class GetAuthor(TemplateView):
     def get(self, request, pk):
         author = Authors.objects.get(pk=pk)
@@ -27,3 +28,15 @@ class GetAuthor(TemplateView):
         response['Access-Control-Allow-Origin'] = '*'
         return response
 
+class Find(TemplateView):
+    def get(self, request):
+        how = request.GET.get("type")
+        text = request.GET.get("word")
+        if (how == "text"):
+            news = New.objects.filter(text__contains=text)
+        if (how == "title"):
+            news = New.objects.filter(title__contains=text)    
+        json_for_finding_news = list(news.values('title', 'text', 'date', 'author', 'id', ))
+        response = JsonResponse(json_for_finding_news, safe=False)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response

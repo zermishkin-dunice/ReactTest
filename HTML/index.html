@@ -13,13 +13,62 @@
     <div class="container">
         <nav class="navbar navbar-light bg-light">
             <a class="navbar-brand" href="#">Главная</a>
-            <div class="btn-group" role="group" aria-label="Basic example">
-                <button type="button" class="btn btn-secondary">Left</button>
-                <button type="button" class="btn btn-secondary">Middle</button>
-                <button type="button" class="btn btn-secondary">Right</button>
-            </div>
-        </nav>
 
+        </nav>
+        <div class="new border p-3 mt-3 rounded">
+            <form method="GET">
+                <input type="text" class="form-control" placeholder="Искать...">
+                <select class="form-control mt-3" >
+                    <option value="title">По заголовку</option>
+                    <option value="text">По задержимому</option>
+                    <option value="tags">По тегам</option>
+                </select>
+                <button type="submit" class="btn btn-primary mt-2">Поискать</button>
+            </form>
+        </div>
+        <div class="new border p-3 mt-3 rounded">
+            <h1>Заголовок новости</h1>
+            <p class='font-italic'>Имя автора, 12/04/1992</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget lorem nisl. Etiam lacus nulla, dictum
+                vel pellentesque ac, condimentum quis sem. Sed sed condimentum ligula, a lobortis lorem. Integer eget
+                varius mi. Suspendisse eleifend finibus risus vel consectetur. Suspendisse lacinia eros a nulla cursus,
+                non hendrerit quam finibus. Proin sagittis rhoncus magna vitae malesuada. Vivamus ultrices faucibus
+                tellus eu pretium.
+            </p>
+            <p>
+                Aenean faucibus justo ut consectetur imperdiet. Ut at sodales ex, eget facilisis velit. Quisque et magna
+                pharetra, eleifend ligula gravida, dapibus lectus. Fusce vitae urna vel dui blandit semper facilisis eu
+                orci. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim rutrum viverra.
+                Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque
+                scelerisque maximus venenatis. Aliquam rhoncus massa justo, at convallis augue convallis tincidunt.
+                Aenean lacinia vulputate orci at finibus. Pellentesque dapibus libero vitae tortor feugiat mattis. Ut ac
+                libero a elit varius lacinia sed non dui. Duis efficitur velit convallis, laoreet quam id, maximus sem.
+                Quisque sit amet imperdiet urna, auctor porttitor tellus. Quisque convallis nisl eget dolor rhoncus, ac
+                maximus magna iaculis.
+            </p>
+            <p>
+                Fusce nec lacinia velit, vitae porta tortor. Aenean quam eros, ultricies quis porta a, ultricies et
+                tortor. Aliquam convallis sollicitudin facilisis. Nunc et venenatis mauris. Integer non mi diam.
+                Suspendisse vel dolor cursus, commodo orci a, blandit diam. Maecenas placerat ultrices orci. Quisque at
+                urna vitae lorem commodo congue. Integer mattis vestibulum facilisis. Sed sagittis, lectus vel feugiat
+                iaculis, odio neque aliquet diam, sed iaculis nisi risus fringilla sapien.
+            </p>
+            <p>
+                Nulla consequat eros eget velit imperdiet tincidunt. Vestibulum vestibulum orci ligula, et elementum
+                ligula auctor eget. Aliquam eu magna nec purus gravida mattis. Maecenas euismod nisl arcu, convallis
+                pretium justo imperdiet ut. In tincidunt imperdiet justo sit amet tincidunt. Vestibulum vehicula
+                consectetur nulla, at posuere dolor interdum in. Integer id ullamcorper arcu.
+            </p>
+            <p>
+                Ut porttitor neque et nisl dapibus pharetra. Nullam maximus dolor eget enim lacinia hendrerit vel ut
+                nibh. Sed sed felis laoreet, interdum turpis in, venenatis dolor. Cras accumsan neque nec ultrices
+                iaculis. Quisque risus urna, ullamcorper quis lectus vitae, cursus hendrerit lacus. Aenean dictum
+                eleifend hendrerit. Pellentesque sollicitudin lorem eu augue bibendum vulputate. Nulla ipsum orci,
+                laoreet et enim eget, tempus rutrum mi. Praesent eleifend eleifend tellus, vitae rhoncus velit hendrerit
+                vel. Phasellus metus leo, aliquet sit amet feugiat nec, feugiat nec odio. Nulla bibendum, purus et
+                commodo semper, tellus orci aliquet purus, sit amet luctus purus elit quis urna.</p>
+            </p>
+        </div>
         <div class="new border p-3 mt-3 rounded">
             <h1>Заголовок новости</h1>
             <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget lorem nisl. Etiam lacus nulla, dictum
@@ -62,49 +111,32 @@
                 commodo semper, tellus orci aliquet purus, sit amet luctus purus elit quis urna.</p>
             </p>
         </div>
-        <div class="new border p-3 mt-3 rounded">
-                <h1>Заголовок новости</h1>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eget lorem nisl. Etiam lacus nulla, dictum
-                    vel pellentesque ac, condimentum quis sem. Sed sed condimentum ligula, a lobortis lorem. Integer eget
-                    varius mi. Suspendisse eleifend finibus risus vel consectetur. Suspendisse lacinia eros a nulla cursus,
-                    non hendrerit quam finibus. Proin sagittis rhoncus magna vitae malesuada. Vivamus ultrices faucibus
-                    tellus eu pretium.
-                </p>
-                <p>
-                    Aenean faucibus justo ut consectetur imperdiet. Ut at sodales ex, eget facilisis velit. Quisque et magna
-                    pharetra, eleifend ligula gravida, dapibus lectus. Fusce vitae urna vel dui blandit semper facilisis eu
-                    orci. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris dignissim rutrum viverra.
-                    Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Pellentesque
-                    scelerisque maximus venenatis. Aliquam rhoncus massa justo, at convallis augue convallis tincidunt.
-                    Aenean lacinia vulputate orci at finibus. Pellentesque dapibus libero vitae tortor feugiat mattis. Ut ac
-                    libero a elit varius lacinia sed non dui. Duis efficitur velit convallis, laoreet quam id, maximus sem.
-                    Quisque sit amet imperdiet urna, auctor porttitor tellus. Quisque convallis nisl eget dolor rhoncus, ac
-                    maximus magna iaculis.
-                </p>
-                <p>
-                    Fusce nec lacinia velit, vitae porta tortor. Aenean quam eros, ultricies quis porta a, ultricies et
-                    tortor. Aliquam convallis sollicitudin facilisis. Nunc et venenatis mauris. Integer non mi diam.
-                    Suspendisse vel dolor cursus, commodo orci a, blandit diam. Maecenas placerat ultrices orci. Quisque at
-                    urna vitae lorem commodo congue. Integer mattis vestibulum facilisis. Sed sagittis, lectus vel feugiat
-                    iaculis, odio neque aliquet diam, sed iaculis nisi risus fringilla sapien.
-                </p>
-                <p>
-                    Nulla consequat eros eget velit imperdiet tincidunt. Vestibulum vestibulum orci ligula, et elementum
-                    ligula auctor eget. Aliquam eu magna nec purus gravida mattis. Maecenas euismod nisl arcu, convallis
-                    pretium justo imperdiet ut. In tincidunt imperdiet justo sit amet tincidunt. Vestibulum vehicula
-                    consectetur nulla, at posuere dolor interdum in. Integer id ullamcorper arcu.
-                </p>
-                <p>
-                    Ut porttitor neque et nisl dapibus pharetra. Nullam maximus dolor eget enim lacinia hendrerit vel ut
-                    nibh. Sed sed felis laoreet, interdum turpis in, venenatis dolor. Cras accumsan neque nec ultrices
-                    iaculis. Quisque risus urna, ullamcorper quis lectus vitae, cursus hendrerit lacus. Aenean dictum
-                    eleifend hendrerit. Pellentesque sollicitudin lorem eu augue bibendum vulputate. Nulla ipsum orci,
-                    laoreet et enim eget, tempus rutrum mi. Praesent eleifend eleifend tellus, vitae rhoncus velit hendrerit
-                    vel. Phasellus metus leo, aliquet sit amet feugiat nec, feugiat nec odio. Nulla bibendum, purus et
-                    commodo semper, tellus orci aliquet purus, sit amet luctus purus elit quis urna.</p>
-                </p>
-            </div>
     </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 </body>
 
 </html>
