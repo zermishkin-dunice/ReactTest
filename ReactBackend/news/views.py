@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.contrib.auth.models import User
-from .models import New
+from .models import New, Avatar
 
 
 class GetNews(TemplateView):
@@ -32,6 +32,8 @@ class GetAuthor(TemplateView):
     def get(self, request, pk):
         author = User.objects.get(pk=pk)
         json_for_author = model_to_dict(author)
+        avatar = Avatar.objects.get(pk = author)
+        json_for_author["avatar"] = str(avatar.avatar)
         response = JsonResponse(json_for_author, safe=False)
         response['Access-Control-Allow-Origin'] = '*'
         return response

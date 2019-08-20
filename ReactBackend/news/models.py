@@ -25,4 +25,7 @@ class New(models.Model):
     def __str__(self):
         return self.title
 
+class Avatar(models.Model):
+    user = models.OneToOneField(User, on_delete=models.PROTECT, primary_key=True,)
+    avatar = models.FileField(upload_to='avatars/')
 

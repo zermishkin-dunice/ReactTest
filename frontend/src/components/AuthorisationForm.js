@@ -4,7 +4,6 @@ class AuthForm extends React.Component{
     constructor(props){
         super(props);
         this.state={
-
         }
     }
 
@@ -15,6 +14,7 @@ class AuthForm extends React.Component{
                     <input type="text" className="form-control" placeholder="Логин" />
                     <input type="password" className="form-control mt-3" placeholder="Пароль" />
                     <button type="submit" className="btn btn-primary mt-2">Авторизация</button>
+                    <button className="btn btn-primary mt-2 ml-2">Регистрация</button>
                 </form>
             </div>
         );
