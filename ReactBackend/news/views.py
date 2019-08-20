@@ -7,13 +7,14 @@ from django.contrib.auth.models import User
 from .models import New, Avatar
 
 
+
 class GetNews(TemplateView):
     def get(self, request):
         page = request.GET.get("page")
         new_on_page = 3
         news = New.objects.all().order_by('date')[(int(page)*new_on_page-new_on_page):int(page)*new_on_page]
-        json_of_all_news = list(news.values('title', 'text', 'date', 'author', 'id', ))
-        response = JsonResponse(json_of_all_news, safe=False)
+        lis = list(news.values('title', 'text', 'date', 'author', 'id', ))
+        response = JsonResponse(lis, safe=False)
         response['Access-Control-Allow-Origin'] = '*'
         response['Total-news'] = len(New.objects.all())
         return response
@@ -31,10 +32,10 @@ class GetOneNew(TemplateView):
 class GetAuthor(TemplateView):
     def get(self, request, pk):
         author = User.objects.get(pk=pk)
-        json_for_author = model_to_dict(author)
+        dic = model_to_dict(author)
         avatar = Avatar.objects.get(pk = author)
-        json_for_author["avatar"] = str(avatar.avatar)
-        response = JsonResponse(json_for_author, safe=False)
+        dic["avatar"] = str(avatar.avatar)
+        response = JsonResponse(dic, safe=False)
         response['Access-Control-Allow-Origin'] = '*'
         return response
 
