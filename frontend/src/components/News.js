@@ -6,6 +6,7 @@ import Navigation from './Navigation';
 import SearchForm from './SearchForm';
 import New from './New';
 import Pagination from './Pagination';
+import AuthForm from './AuthorisationForm';
 
 class Container extends React.Component {
     constructor(props) {
@@ -41,7 +42,10 @@ class Container extends React.Component {
         return (
             <div className="container">
                 <Navigation />
-                <SearchForm />
+                <div class='d-flex justify-content-between'>
+                  <SearchForm />
+                  <AuthForm />
+                </div>
                 {   
                     news &&
                     news.length !== 0 &&

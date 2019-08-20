@@ -12,9 +12,7 @@ class GetNews(TemplateView):
         page = request.GET.get("page")
         new_on_page = 3
         news = New.objects.all().order_by('date')[(int(page)*new_on_page-new_on_page):int(page)*new_on_page]
-        
         json_of_all_news = list(news.values('title', 'text', 'date', 'author', 'id', ))
-                                       
         response = JsonResponse(json_of_all_news, safe=False)
         response['Access-Control-Allow-Origin'] = '*'
         response['Total-news'] = len(New.objects.all())
