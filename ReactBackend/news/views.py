@@ -3,7 +3,8 @@ from django.views.generic import TemplateView
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
-from .models import New, Authors
+from django.contrib.auth.models import User
+from .models import New
 
 
 class GetNews(TemplateView):
@@ -31,7 +32,7 @@ class GetOneNew(TemplateView):
 
 class GetAuthor(TemplateView):
     def get(self, request, pk):
-        author = Authors.objects.get(pk=pk)
+        author = User.objects.get(pk=pk)
         json_for_author = model_to_dict(author)
         response = JsonResponse(json_for_author, safe=False)
         response['Access-Control-Allow-Origin'] = '*'

@@ -15,8 +15,8 @@ class New extends React.Component{
           .then(res => {
             const author_ = res.data;
             this.setState({
-                author_name: res.data.name,
-                author_surname: res.data.surname,
+                author_name: res.data.first_name,
+                author_surname: res.data.last_name,
             })
             })
     }
@@ -29,7 +29,7 @@ class New extends React.Component{
         return(
         <div className="new border p-3 mt-3 rounded">
             <h1>{this.props.title}</h1>
-            <p class='font-italic'>{this.state.author_surname} {this.state.author_name}, {this.props.date}</p>
+            <p class='font-italic'>{this.state.author_name} {this.state.author_surname}, {this.props.date}</p>
             {this.props.text} <br />    
               
         </div>
