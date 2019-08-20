@@ -25,7 +25,6 @@ class New(models.Model):
     text = models.TextField(null=False, verbose_name="Текст")
     date = models.DateField(null=False, verbose_name="Дата")
     author = models.ForeignKey(Authors, on_delete="SET_NULL")
-    #tag = models.ManyToManyField(Tag) Нихуя блять пока не работает 
     class Meta:
         verbose_name = "Новость"
         verbose_name_plural = "Новости"

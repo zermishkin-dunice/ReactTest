@@ -15,16 +15,25 @@
             <a class="navbar-brand" href="#">Главная</a>
 
         </nav>
-        <div class="new border p-3 mt-3 rounded">
-            <form method="GET">
-                <input type="text" class="form-control" placeholder="Искать...">
-                <select class="form-control mt-3" >
-                    <option value="title">По заголовку</option>
-                    <option value="text">По задержимому</option>
-                    <option value="tags">По тегам</option>
-                </select>
-                <button type="submit" class="btn btn-primary mt-2">Поискать</button>
-            </form>
+        <div class='d-flex justify-content-between'>
+            <div class="new border p-3 mt-3 mr-3 rounded flex-fill">
+                <form method="GET">
+                    <input type="text" class="form-control" placeholder="Искать...">
+                    <select class="form-control mt-3">
+                        <option value="title">По заголовку</option>
+                        <option value="text">По задержимому</option>
+                        <option value="tags">По тегам</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary mt-2">Поискать</button>
+                </form>
+            </div>
+            <div class="new border p-3 mt-3 rounded flex-fill">
+                <form method="GET">
+                    <input type="text" class="form-control" placeholder="Логин">
+                    <input type="password" class="form-control mt-3" placeholder="Пароль">
+                    <button type="submit" class="btn btn-primary mt-2">Авторизация</button>
+                </form>
+            </div>
         </div>
         <div class="new border p-3 mt-3 rounded">
             <h1>Заголовок новости</h1>
@@ -111,28 +120,41 @@
                 commodo semper, tellus orci aliquet purus, sit amet luctus purus elit quis urna.</p>
             </p>
         </div>
+        <nav aria-label="..." class="mt-3">
+            <ul class="pagination">
+                <li class="page-item disabled"><a class="page-link" href="#" tabindex="-1" aria-disabled="true">Туда</a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item active" aria-current="page"><a class="page-link" href="#">2 <span
+                            class="sr-only">(current)</span></a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Сюда</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        ...
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
 
 

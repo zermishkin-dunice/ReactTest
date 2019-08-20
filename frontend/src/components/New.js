@@ -22,8 +22,7 @@ class New extends React.Component{
     }
 
     componentDidMount() {
-        this.get_author(this.props.id);
-       
+        this.get_author(this.props.id);       
     }
 
     render(){

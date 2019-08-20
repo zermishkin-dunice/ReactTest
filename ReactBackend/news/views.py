@@ -5,12 +5,20 @@ from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from .models import New, Authors
 
+
 class GetNews(TemplateView):
     def get(self, request):
-         json_of_all_news = list(New.objects.all().values('title', 'text', 'date', 'author', 'id', ) ) 
-         response = JsonResponse(json_of_all_news, safe=False)
-         response['Access-Control-Allow-Origin'] = '*'
-         return response
+        page = request.GET.get("page")
+        new_on_page = 3
+        news = New.objects.all().order_by('date')[(int(page)*new_on_page-new_on_page):int(page)*new_on_page]
+        
+        json_of_all_news = list(news.values('title', 'text', 'date', 'author', 'id', ))
+                                       
+        response = JsonResponse(json_of_all_news, safe=False)
+        response['Access-Control-Allow-Origin'] = '*'
+        response['Total-news'] = len(New.objects.all())
+        return response
+
 
 class GetOneNew(TemplateView):
     def get(self, request, pk):
@@ -20,6 +28,7 @@ class GetOneNew(TemplateView):
         response['Access-Control-Allow-Origin'] = '*'
         return response
 
+
 class GetAuthor(TemplateView):
     def get(self, request, pk):
         author = Authors.objects.get(pk=pk)
@@ -28,6 +37,7 @@ class GetAuthor(TemplateView):
         response['Access-Control-Allow-Origin'] = '*'
         return response
 
+
 class Find(TemplateView):
     def get(self, request):
         how = request.GET.get("type")
@@ -35,8 +45,16 @@ class Find(TemplateView):
         if (how == "text"):
             news = New.objects.filter(text__contains=text)
         if (how == "title"):
-            news = New.objects.filter(title__contains=text)    
-        json_for_finding_news = list(news.values('title', 'text', 'date', 'author', 'id', ))
+            news = New.objects.filter(title__contains=text)
+        json_for_finding_news = list(news.values(
+            'title', 'text', 'date', 'author', 'id', ))
         response = JsonResponse(json_for_finding_news, safe=False)
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
+
+class Total_news(TemplateView):
+    def get(self, request):
+        count = len(New.objects.all())
+        response = HttpResponse(count)  
         response['Access-Control-Allow-Origin'] = '*'
         return response
