@@ -93,6 +93,13 @@ class Auth2(TemplateView):
                             password=request.POST.get('password'))
         if user is not None:
             token = Token.objects.get(user = user)
-            return HttpResponse(token)
+            response = HttpResponse(token)
+            response['Access-Control-Allow-Origin'] = '*'
+            return response
         else:
             return HttpResponse("Not success")
+    def options(self, request):
+        response = HttpResponse()
+        response['Access-Control-Allow-Origin'] = '*'
+        print(response)
+        return response

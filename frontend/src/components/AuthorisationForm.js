@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import { authorize } from './actions'
+import { authorize } from './actions';
 
 class AuthForm extends React.Component{
     constructor(props){
@@ -14,8 +14,6 @@ class AuthForm extends React.Component{
 
     authorizate(event){
         event.preventDefault();
-        console.log("Trying to authorazate");
-        console.log(event);
         let data = {login: this.state.login, pass: this.state.password}
         this.props.dispatch(authorize(data));
     }

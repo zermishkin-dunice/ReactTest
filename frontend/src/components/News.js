@@ -54,6 +54,7 @@ const mapStateToProps = function(state){
         news: state.news,
         total: state.total,
         page: state.page,
+        token: state.token,
     };
 }
 
