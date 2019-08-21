@@ -2,6 +2,8 @@ import React from 'react';
 import {connect} from 'react-redux';
 import store from './store';
 import axios from 'axios';
+import { gettotal, getnewsonpage, page_action } from './actions';
+import { news_on_page } from './News'
 
 class Pagination extends React.Component{
     constructor(props){
@@ -19,39 +21,19 @@ class Pagination extends React.Component{
     goToBack(){
         let new_page = this.state.page-1;
         this.setState({page: new_page});
-        store.dispatch({
-            type: "PAGE",
-            page: new_page,
-        })
-        axios.get('http://localhost:8000/get/news/', {params: {page: new_page}})
-          .then(res => {
-            const news_ = res.data;
-            store.dispatch({
-                type: "GET_NEWS",
-                news: news_,
-            })
-            
-          });
+        this.props.dispatch(page_action(new_page))
+        this.props.dispatch(gettotal());
+        this.props.dispatch(getnewsonpage({page: new_page, news_on_page}));
+        
         
     }
 
     goToForward(){
         let new_page = this.state.page + 1;
         this.setState({page: new_page});
-        axios.get('http://localhost:8000/get/news/', {params: {page: new_page}})
-          .then(res => {
-            const news_ = res.data;
-            store.dispatch({
-                type: "GET_NEWS",
-                news: news_,
-            })
-            
-          })
-        store.dispatch({
-            type: "PAGE",
-            page: new_page,
-        });
-        
+        this.props.dispatch(page_action(new_page))
+        this.props.dispatch(gettotal());
+        this.props.dispatch(getnewsonpage({page: new_page, news_on_page}));        
     }
     
     

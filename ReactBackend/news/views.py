@@ -10,8 +10,14 @@ from .models import New, Avatar
 
 class GetNews(TemplateView):
     def get(self, request):
-        page = request.GET.get("page")
-        new_on_page = 3
+        if (request.GET.get("page")):
+            page = int(request.GET.get("page"))
+        else:
+            page = 1
+        if (request.GET.get("news_on_page")):
+            new_on_page = int(request.GET.get("news_on_page"))
+        else:
+            new_on_page = 3
         news = New.objects.all().order_by('date')[(int(page)*new_on_page-new_on_page):int(page)*new_on_page]
         lis = list(news.values('title', 'text', 'date', 'author', 'id', ))
         response = JsonResponse(lis, safe=False)

@@ -13,7 +13,6 @@ class New extends React.Component{
     get_author(id){
         axios.get(`http://localhost:8000/get/author/${this.props.author}`)
           .then(res => {
-            const author_ = res.data;
             this.setState({
                 author_name: res.data.first_name,
                 author_surname: res.data.last_name,

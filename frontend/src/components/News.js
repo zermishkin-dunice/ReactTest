@@ -1,38 +1,27 @@
 import React from 'react';
-import axios from 'axios';
-import store from './store';
 import {connect} from 'react-redux';
 import Navigation from './Navigation';
 import SearchForm from './SearchForm';
 import New from './New';
 import Pagination from './Pagination';
 import AuthForm from './AuthorisationForm';
+import { gettotal, getnewsonpage } from './actions'
+
+
+export const news_on_page = 5;
 
 class Container extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
           news: [],
-          page: 1,
-          total: 0,
+          page: 1,          
         };
-      }
-    
+      } 
+
       componentDidMount() {
-        axios.get('http://localhost:8000/get/news/', {params: {page: this.state.page}})
-          .then(res => {
-            const news_ = res.data;
-            store.dispatch({
-                type: "GET_NEWS",
-                news: news_,
-            })
-          });
-        axios.get('http://localhost:8000/get/news/total/')
-          .then(res => {
-            const total_ = res.data;
-            console.log(res.data);
-            this.setState({total: total_});       
-          });
+      this.props.dispatch(gettotal());
+      this.props.dispatch(getnewsonpage({page: this.state.page, news_on_page}));
       }
 
     render() {
@@ -53,7 +42,7 @@ class Container extends React.Component {
                         <New key={item.id} title = {item.title} text={item.text} author={item.author} date={item.date}/>
                     ))
                 }
-                { news && news.length !== 0 && <Pagination total={this.state.total}/>}
+                { news && news.length !== 0 && <Pagination total={this.props.total}/>}
             </div>
         );
     }
@@ -63,6 +52,8 @@ class Container extends React.Component {
 const mapStateToProps = function(state){
     return {
         news: state.news,
+        total: state.total,
+        page: state.page,
     };
 }
 
