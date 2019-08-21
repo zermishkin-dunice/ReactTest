@@ -89,17 +89,28 @@ class Auth(APIView):
 
 class Auth2(TemplateView):
     def post(self, request):
-        user = authenticate(username=request.POST.get('username'),
-                            password=request.POST.get('password'))
+        get_username = request.POST.get('username')
+        get_password = request.POST.get('password')
+        user = authenticate(username=get_username,
+                            password=get_password)
+        print(request)
+        print("Username: ", get_username)
+        print("Password: ", get_password)
         if user is not None:
+            print("Найден пользователь")
             token = Token.objects.get(user = user)
             response = HttpResponse(token)
             response['Access-Control-Allow-Origin'] = '*'
+            print(response)
             return response
         else:
-            return HttpResponse("Not success")
+            response = HttpResponse("Not success")
+            response['Access-Control-Allow-Origin'] = '*'
+            print(response)
+            return response
     def options(self, request):
         response = HttpResponse()
         response['Access-Control-Allow-Origin'] = '*'
+        response['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
         print(response)
         return response

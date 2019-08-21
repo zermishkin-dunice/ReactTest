@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { put, takeEvery, call } from 'redux-saga/effects';
-
+import qs from 'qs';
 
 // Actions from Saga's
 const requestTotal = (data) => {
@@ -12,7 +12,6 @@ const request_news = (data) => {
 }
 
 const getting_token = (data) => {
-    console.log("from actions. Data: ", data);
     return { type: "GET_TOKEN", token: data }
 }
 
@@ -45,12 +44,6 @@ export function* getNewsAsync(page, news_on_page) {
 
 export function* autorizeAsync(info){
     const data = yield call(() => {
-        let head = {
-            'Access-Control-Allow-Origin': '*',
-        };
-        let body = {
-            "PAe": "wr",
-        };
-        return axios.post('localhost:8000/get/auth2', body, { headers: head})});
+        return axios.post('http://localhost:8000/get/auth2', qs.stringify({username: info.data.login, password: info.data.pass}));  } );  
     yield put(getting_token(data.data));
 }

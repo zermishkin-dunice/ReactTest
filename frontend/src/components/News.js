@@ -33,7 +33,7 @@ class Container extends React.Component {
                 <Navigation />
                 <div class='d-flex justify-content-between'>
                   <SearchForm />
-                  <AuthForm />
+                  <AuthForm />                  
                 </div>
                 {   
                     news &&
