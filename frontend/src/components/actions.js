@@ -9,3 +9,7 @@ export const gettotal = () => {
 export const page_action = (page) => {
     return { type: "PAGE", page: page }
 }
+
+export const authorize = (data) => {
+  return { type: "AUTORIZE_PAGE", data: data }
+}
