@@ -14,7 +14,10 @@ class AuthForm extends React.Component{
 
     authorizate(event){
         event.preventDefault();
-        let data = {login: this.state.login, pass: this.state.password}
+        let data = {
+            login: this.state.login, 
+            pass: this.state.password
+        }
         this.props.dispatch(authorize(data));
     }
 

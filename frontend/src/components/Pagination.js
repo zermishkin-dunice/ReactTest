@@ -1,7 +1,5 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import store from './store';
-import axios from 'axios';
 import { gettotal, getnewsonpage, page_action } from './actions';
 import { news_on_page } from './News'
 
@@ -24,8 +22,6 @@ class Pagination extends React.Component{
         this.props.dispatch(page_action(new_page))
         this.props.dispatch(gettotal());
         this.props.dispatch(getnewsonpage({page: new_page, news_on_page}));
-        
-        
     }
 
     goToForward(){

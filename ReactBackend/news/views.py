@@ -11,6 +11,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
+import datetime
 
 
 class GetNews(TemplateView):
@@ -74,6 +75,7 @@ class Total_news(TemplateView):
         response['Access-Control-Allow-Origin'] = '*'
         return response
 
+
 class Auth2(TemplateView):
     def post(self, request):
         get_username = request.POST.get('username')
@@ -81,7 +83,7 @@ class Auth2(TemplateView):
         user = authenticate(username=get_username,
                             password=get_password)
         if user is not None:
-            token = Token.objects.get(user = user)
+            token = Token.objects.get(user=user)
             avatar = Avatar.objects.get(pk=user)
             data = model_to_dict(user)
             data["avatar"] = str(avatar.avatar)
@@ -92,11 +94,56 @@ class Auth2(TemplateView):
         else:
             response = HttpResponse("Not success")
             response['Access-Control-Allow-Origin'] = '*'
-            print(response)
             return response
+
+    def options(self, request):
+        response = HttpResponse()
+        response['Access-Control-Allow-Origin'] = '*'
+        response['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
+        return response
+
+
+class Adding_News(TemplateView):
     def options(self, request):
         response = HttpResponse()
         response['Access-Control-Allow-Origin'] = '*'
         response['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
         print(response)
+        return response
+    def post(self, request):
+        print("Метод POST из Adding_News")
+        title = request.POST.get("title")
+        text = request.POST.get("text")
+        user = User.objects.get(pk=1)
+        get_token = request.POST.get("token")
+        token = Token.objects.get(key = get_token)
+        user = User.objects.get(pk=token.user_id)
+        new = New.objects.create(title = title, text = text, date = datetime.datetime.now(), author = user)
+        new.save()
+        response = HttpResponse("Успешное сохранение")
+        response['Access-Control-Allow-Origin'] = '*'
+        response['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
+        return response
+
+class ExampleView(APIView):
+    # authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
+    # permission_classes = [IsAuthenticated]
+    def options(self, request):
+        print("Метод OPTIONS")
+        response = HttpResponse()
+        response['Access-Control-Allow-Origin'] = '*'
+        response['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
+        print(response)
+        return response
+    def post(self, request):
+        print("Метод POST")
+        title = request.POST.get("title")
+        text = request.POST.get("text")
+        author = request.user
+        new = New.objects.create(title = title, text = text, date = datetime.datetime.now(), author = author)
+        new.save()
+        response = HttpResponse("Успешное сохранение")
+        response['Access-Control-Allow-Origin'] = '*'
+        response['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
+        
         return response

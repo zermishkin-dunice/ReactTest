@@ -8,6 +8,7 @@ import AuthForm from './AuthorisationForm';
 import { gettotal, getnewsonpage } from './actions'
 import UserBoard from './UserBoard';
 import Cookies from 'universal-cookie';
+import AddNewModal from './AddNewModal';
 
 export const news_on_page = 5;
 const cookies = new Cookies();
@@ -49,6 +50,8 @@ class Container extends React.Component {
                     ))
                 }
                 { news && news.length !== 0 && <Pagination total={this.props.total}/>}
+                { (cookies.get("token")) && <AddNewModal /> }
+                
             </div>
         );
     }
@@ -61,6 +64,7 @@ const mapStateToProps = function(state){
         total: state.total,
         page: state.page,
         user: state.user,
+        result_of_sending: state.result_of_sending,
     };
 }
 

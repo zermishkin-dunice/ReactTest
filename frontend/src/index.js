@@ -5,6 +5,8 @@ import * as serviceWorker from './serviceWorker';
 import store from './components/store';
 import { Provider } from 'react-redux'; 
 
+
+
 ReactDOM.render(
     <Provider store={store}>
     <News /></Provider>, document.getElementById('root')

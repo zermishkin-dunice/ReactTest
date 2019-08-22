@@ -30,6 +30,11 @@ const getting_token = (data) => {
     return { type: "GET_USER", data: data };    
 }
 
+const answer_for_creating_new = (data) => {
+    console.log("answer_for_creating_new");
+    return { type: "RESULT_OF_SENDING", data};
+}
+
 
 // Sagas' watchers
 export function* get_total() {
@@ -40,8 +45,12 @@ export function* get_news(page) {
 }
 
 export function* try_authorize(data) {
-    console.log("Try_autorize_watcher. Data: ", data);
     yield takeEvery('AUTORIZE_PAGE', autorizeAsync);
+}
+
+export function* try_sending_new(data) {
+    console.log("try_sending_new. Data: ", data);
+    yield takeEvery('SENDING_NEW', sending_new_async);
 }
 
 // Sagas' workers
@@ -62,4 +71,12 @@ export function* autorizeAsync(info){
         return axios.post('http://localhost:8000/get/auth2', qs.stringify({username: info.data.login, password: info.data.pass}));  } );  
     console.log("Только пришло", data.data);     
     yield put(getting_token(data.data));
+}
+
+export function* sending_new_async(info){
+    const data = yield call(() => {
+        let data = qs.stringify({title: info.data.title, text: info.data.text});
+        return axios.post('http://localhost:8000/get/news/add', qs.stringify({text: info.data.text, title: info.data.title, token: "a5f6b05301d59546da2f7bd177913c9b65320139"}));  } );  
+    console.log("Ответ сервера", data.data);     
+    yield put(answer_for_creating_new(data.data));
 }

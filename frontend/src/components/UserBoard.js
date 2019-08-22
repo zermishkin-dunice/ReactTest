@@ -3,6 +3,7 @@ import Cookies from 'universal-cookie';
 import {connect} from 'react-redux';
 import { logout } from './actions';
 
+
 const cookies = new Cookies();
 
 class UserBoard extends React.Component{
@@ -42,14 +43,16 @@ class UserBoard extends React.Component{
                         <p>Заслуженный автор новостей на тестовых заданиях </p>
                         <div className="btn-group" role="group" aria-label="Basic example">
                             <button type="button" className="btn btn-danger" onClick={this.logout}>Разлогиниться</button>
-                            <button type="button" className="btn btn-info">Добавить новую новость</button>
+                            <button type="button" className="btn btn-info" data-toggle="modal" data-target="#exampleModal">Добавить новую новость</button>
                             <button type="button" className="btn btn-success">Сменить аватарку</button>
                         </div>
                             
                         
                     </div>
                   </div>
+                  
                   </div>
+                  
                   
           )
       }
