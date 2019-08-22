@@ -44,6 +44,7 @@ class UserBoard extends React.Component{
                             <button type="button" className="btn btn-info">Добавить новую новость</button>
                             
                         </div>
+                            
                         
                     </div>
                   </div>

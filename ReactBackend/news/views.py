@@ -94,13 +94,11 @@ class Auth2(TemplateView):
         user = authenticate(username=get_username,
                             password=get_password)
         if user is not None:
-            print("Найден пользователь")
             token = Token.objects.get(user = user)
             avatar = Avatar.objects.get(pk=user)
             data = model_to_dict(user)
             data["avatar"] = str(avatar.avatar)
             data["token"] = str(token)
-            print(data)
             response = JsonResponse(data)
             response['Access-Control-Allow-Origin'] = '*'
             return response
