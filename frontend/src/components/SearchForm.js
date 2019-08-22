@@ -18,7 +18,6 @@ class SearchForm extends React.Component{
     
     onSubmit(event) {
         event.preventDefault();
-        console.log(this.state.search);
         axios.get(`http://localhost:8000/get/news/search/?type=${this.state.search}&word=${this.state.word}`)
           .then(res => {
             const news_ = res.data;
@@ -46,7 +45,6 @@ class SearchForm extends React.Component{
                 <select class="form-control mt-3" onChange={this.onChangeSelect}>>
                     <option value="title">По заголовку</option>
                     <option value="text">По содержимому</option>
-                    <option value="tags">По тегам</option>
                 </select>
                 <button type="submit" className="btn btn-primary mt-2">Поискать</button>
             </form>

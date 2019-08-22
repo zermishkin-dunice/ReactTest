@@ -74,19 +74,6 @@ class Total_news(TemplateView):
         response['Access-Control-Allow-Origin'] = '*'
         return response
 
-
-class Auth(APIView):
-    def get(self, request, format=None):
-        authentication_classes = [SessionAuthentication,
-                                  BasicAuthentication, TokenAuthentication]
-        permission_classes = [IsAuthenticated, ]
-        content = {
-            'user': str(request.user),
-            'auth': str(request.auth),
-        }
-        return Response(content)
-
-
 class Auth2(TemplateView):
     def post(self, request):
         get_username = request.POST.get('username')

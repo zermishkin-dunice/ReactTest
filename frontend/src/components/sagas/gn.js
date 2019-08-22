@@ -23,6 +23,8 @@ const getting_token = (data) => {
         cookies.set("token", data.token);
         cookies.set("first_name", data.first_name);
         cookies.set("last_name", data.last_name);
+        cookies.set("avatar", data.avatar);
+        
         
     }
     return { type: "GET_USER", data: data };    
