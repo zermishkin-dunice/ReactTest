@@ -25,7 +25,7 @@ class GetNews(TemplateView):
         else:
             new_on_page = 3
         news = New.objects.all().order_by(
-            'date')[(int(page)*new_on_page-new_on_page):int(page)*new_on_page]
+            '-date')[(int(page)*new_on_page-new_on_page):int(page)*new_on_page]
         lis = list(news.values('title', 'text', 'date', 'author', 'id', ))
         response = JsonResponse(lis, safe=False)
         response['Access-Control-Allow-Origin'] = '*'

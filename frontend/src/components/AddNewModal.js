@@ -2,6 +2,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import Cookies from 'universal-cookie';
 import { sending_news, gettotal, getnewsonpage } from './actions';
+import { news_on_page } from './News';
 
 const cookies = new Cookies();
 
@@ -30,6 +31,8 @@ class AddForm extends React.Component{
         };
         this.props.dispatch(sending_news(data));
         this.props.dispatch(gettotal());
+        this.props.dispatch(getnewsonpage({page: this.state.page, news_on_page}));
+        
 
     }
 
@@ -49,7 +52,7 @@ class AddForm extends React.Component{
             <input type="text" className="form-control" placeholder="Заголовок" onChange={this.typing_title}/>
             <textarea className="form-control mt-3" placeholder="Тело новости" onChange={this.typing_text}></textarea>
             <button type="button" class="btn btn-secondary mt-3" data-dismiss="modal">Передумал</button>
-            <button type="submit" class="btn btn-primary mt-3 ml-1">Отправить</button>
+            <button type="submit" class="btn btn-primary mt-3 ml-1" data-dismiss="modal" onClick={this.sendnew}>Отправить</button>
         </form>
       </div>
     </div>
@@ -64,6 +67,7 @@ const mapStateToProps = function(state){
     return {
         user: state.user, 
         total: state.total,         
+        page: state.page,
     };
 }
 
