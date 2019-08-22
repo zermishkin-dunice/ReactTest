@@ -39,8 +39,7 @@ class Container extends React.Component {
                 <Navigation />
                 <div class='d-flex justify-content-between'>
                 <SearchForm />
-                { !(cookies.get("token")) && <AuthForm /> }
-                { (cookies.get("token")) && <UserBoard /> }
+                { (cookies.get("token")) ? <UserBoard /> : <AuthForm />}
                 </div>
                 {   
                     news &&
@@ -63,8 +62,7 @@ const mapStateToProps = function(state){
         news: state.news,
         total: state.total,
         page: state.page,
-        user: state.user,
-        result_of_sending: state.result_of_sending,
+        user: state.user,        
     };
 }
 
