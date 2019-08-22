@@ -1,6 +1,9 @@
 import axios from 'axios';
 import { put, takeEvery, call } from 'redux-saga/effects';
 import qs from 'qs';
+import Cookies from 'universal-cookie';
+
+const cookies = new Cookies();
 
 // Actions from Saga's
 const requestTotal = (data) => {
@@ -12,7 +15,17 @@ const request_news = (data) => {
 }
 
 const getting_token = (data) => {
-    return { type: "GET_TOKEN", token: data }
+    if (data == "Not success"){
+        console.log("Не будем ставить куки(");
+        return { type: "GET_USER", data};
+        }
+    else{
+        cookies.set("token", data.token);
+        cookies.set("first_name", data.first_name);
+        cookies.set("last_name", data.last_name);
+        
+    }
+    return { type: "GET_USER", data: data };    
 }
 
 
@@ -45,5 +58,6 @@ export function* getNewsAsync(page, news_on_page) {
 export function* autorizeAsync(info){
     const data = yield call(() => {
         return axios.post('http://localhost:8000/get/auth2', qs.stringify({username: info.data.login, password: info.data.pass}));  } );  
+    console.log("Только пришло", data.data);     
     yield put(getting_token(data.data));
 }

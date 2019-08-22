@@ -6,16 +6,19 @@ import New from './New';
 import Pagination from './Pagination';
 import AuthForm from './AuthorisationForm';
 import { gettotal, getnewsonpage } from './actions'
-
+import UserBoard from './UserBoard';
+import Cookies from 'universal-cookie';
 
 export const news_on_page = 5;
+const cookies = new Cookies();
 
 class Container extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
           news: [],
-          page: 1,          
+          page: 1, 
+          token: null,         
         };
       } 
 
@@ -28,12 +31,15 @@ class Container extends React.Component {
         const {
             news,
         } = this.props;
+        
+
         return (
             <div className="container">
                 <Navigation />
                 <div class='d-flex justify-content-between'>
-                  <SearchForm />
-                  <AuthForm />                  
+                <SearchForm />
+                { !(cookies.get("token")) && <AuthForm /> }
+                { (cookies.get("token")) && <UserBoard /> }
                 </div>
                 {   
                     news &&
@@ -54,7 +60,7 @@ const mapStateToProps = function(state){
         news: state.news,
         total: state.total,
         page: state.page,
-        token: state.token,
+        user: state.user,
     };
 }
 

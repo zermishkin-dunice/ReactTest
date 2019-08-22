@@ -35,7 +35,7 @@ class AuthForm extends React.Component{
                     <input type="text" className="form-control" placeholder="Логин" onChange={this.typing_login}/>
                     <input type="password" className="form-control mt-3" placeholder="Пароль" onChange={this.typing_password}/>
                     <button type="submit" className="btn btn-primary mt-2">Авторизация</button>
-                    
+                   
                 </form>
             </div>
         );
@@ -44,8 +44,7 @@ class AuthForm extends React.Component{
 
 const mapStateToProps = function(state){
     return {
-        user: state.user,
-        token: state.token,
+        user: state.user,        
     };
 }
 
