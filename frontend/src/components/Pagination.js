@@ -15,7 +15,6 @@ class Pagination extends React.Component{
     
     } 
     
-    
     goToBack(){
         let new_page = this.state.page-1;
         this.setState({page: new_page});
@@ -30,9 +29,7 @@ class Pagination extends React.Component{
         this.props.dispatch(page_action(new_page))
         this.props.dispatch(gettotal());
         this.props.dispatch(getnewsonpage({page: new_page, news_on_page}));        
-    }
-    
-    
+    }  
     
     render(){
         return(

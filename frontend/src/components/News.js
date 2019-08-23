@@ -10,7 +10,7 @@ import UserBoard from './UserBoard';
 import Cookies from 'universal-cookie';
 import AddNewModal from './AddNewModal';
 
-export const news_on_page = 2;
+export const news_on_page = 5;
 const cookies = new Cookies();
 
 class Container extends React.Component {
@@ -37,6 +37,7 @@ class Container extends React.Component {
             news,
         } = this.props;
         
+        let user = this.props.user;
 
         return (
             <div className="container">
@@ -49,10 +50,11 @@ class Container extends React.Component {
                     news &&
                     news.length !== 0 &&
                     news.map(item => (
-                        <New key={item.id} title = {item.title} text={item.text} author={item.author} date={item.date}/>
+                        <New key={item.id} title = {item.title} text={item.text} author={item.author} date={item.date} picture={item.picture}/>
                     ))
                 }
                 { news && news.length !== 0 && <Pagination total={this.props.total}/>}
+                
                 { (cookies.get("token")) && <AddNewModal /> }
                 
             </div>

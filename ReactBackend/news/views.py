@@ -15,6 +15,7 @@ import datetime
 
 
 
+
 class GetNews(TemplateView):
     def get(self, request):
         if (request.GET.get("page")):
@@ -27,7 +28,7 @@ class GetNews(TemplateView):
             new_on_page = 3
         news = New.objects.all().order_by(
             '-date')[(int(page)*new_on_page-new_on_page):int(page)*new_on_page]
-        lis = list(news.values('title', 'text', 'date', 'author', 'id', ))
+        lis = list(news.values('title', 'text', 'date', 'author', 'id', 'picture' ))
         response = JsonResponse(lis, safe=False)
         response['Access-Control-Allow-Origin'] = '*'
         response['Total-news'] = len(New.objects.all())
@@ -93,14 +94,15 @@ class Auth2(TemplateView):
             response['Access-Control-Allow-Origin'] = '*'
             return response
         else:
-            response = HttpResponse("Not success")
+            otvet = "error login. Time: " + str(datetime.datetime.now())
+            print(otvet)
+            response = HttpResponse(otvet)
             response['Access-Control-Allow-Origin'] = '*'
             return response
 
     def options(self, request):
         response = HttpResponse()
         response['Access-Control-Allow-Origin'] = '*'
-        response['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
         return response
 
 
@@ -109,10 +111,8 @@ class Adding_News(TemplateView):
         response = HttpResponse()
         response['Access-Control-Allow-Origin'] = '*'
         response['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
-        print(response)
         return response
     def post(self, request):
-        print("Метод POST из Adding_News")
         title = request.POST.get("title")
         text = request.POST.get("text")
         user = User.objects.get(pk=1)
@@ -123,32 +123,24 @@ class Adding_News(TemplateView):
         new.save()
         response = HttpResponse("Успешное сохранение")
         response['Access-Control-Allow-Origin'] = '*'
-        response['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
         return response
 
 class Change_Ava(TemplateView):
     def options(self, request):
         response = HttpResponse()
         response['Access-Control-Allow-Origin'] = '*'
-        response['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
         return response
     def post(self, request):
-        print("Метод POST из Change_Ava")
-        print("request-post: ", request.POST)
-        print("request-file: ", request.FILES)
         get_token = request.POST.get("token")
         token = Token.objects.get(key = get_token)
         user = User.objects.get(pk=token.user_id)
-        print("Найден пользователь ", user)
         avatar = Avatar.objects.get(pk=user.id)
-        print("Найден аватар ", avatar)       
         avatar.avatar = request.FILES['file']
         avatar.save()
         data = {}
         data["avatar"] = str(avatar.avatar)
         response = JsonResponse(data)
         response['Access-Control-Allow-Origin'] = '*'
-        response['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
         return response
 
 

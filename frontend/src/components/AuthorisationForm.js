@@ -19,6 +19,7 @@ class AuthForm extends React.Component{
             pass: this.state.password
         }
         this.props.dispatch(authorize(data));
+        this.setState({user: this.props.user});
     }
 
     typing_login(event){
@@ -38,7 +39,12 @@ class AuthForm extends React.Component{
                     <input type="text" className="form-control" placeholder="Логин" onChange={this.typing_login}/>
                     <input type="password" className="form-control mt-3" placeholder="Пароль" onChange={this.typing_password}/>
                     <button type="submit" className="btn btn-primary mt-2">Авторизация</button>
-                   
+                    { this.props.user && 
+                    <div class="alert alert-danger mt-2 ml-2 " role="alert">
+                        Неверный логин или пароль. Попробуй еще. 
+                    </div>
+                  
+                    }
                 </form>
             </div>
         );

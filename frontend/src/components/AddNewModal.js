@@ -27,11 +27,12 @@ class AddForm extends React.Component{
     sendnew(){
         let data = {
             text: this.state.text,
-            title: this.state.title,           
+            title: this.state.title,
+            token: cookies.get("token"),           
         };
         this.props.dispatch(sending_news(data));
         this.props.dispatch(gettotal());
-        this.props.dispatch(getnewsonpage({page: this.state.page, news_on_page}));
+        this.props.dispatch(getnewsonpage({page: this.props.page, news_on_page}));
         
 
     }
@@ -68,6 +69,7 @@ const mapStateToProps = function(state){
         user: state.user, 
         total: state.total,         
         page: state.page,
+        news: state.news,
     };
 }
 

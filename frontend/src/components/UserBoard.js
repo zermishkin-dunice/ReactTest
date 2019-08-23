@@ -25,6 +25,8 @@ class UserBoard extends React.Component{
         cookies.remove("token");
         cookies.remove("first_name");
         cookies.remove("last_name");
+        cookies.remove("id");
+        cookies.remove("username");
         this.props.dispatch(logout());
     }
 

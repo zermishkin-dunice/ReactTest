@@ -18,6 +18,7 @@ class New(models.Model):
     text = models.TextField(null=False, verbose_name="Текст")
     date = models.DateField(null=False, verbose_name="Дата")
     author = models.ForeignKey(User, on_delete="SET_NULL", default=1)
+    picture = models.FileField(upload_to='pictures/', default='pictures/default.jpg')
     class Meta:
         verbose_name = "Новость"
         verbose_name_plural = "Новости"
@@ -27,5 +28,5 @@ class New(models.Model):
 
 class Avatar(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT, primary_key=True,)
-    avatar = models.FileField(upload_to='avatars/')
+    avatar = models.FileField(upload_to='avatars/', verbose_name="Картинка к новости")
 
