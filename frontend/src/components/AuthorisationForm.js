@@ -40,10 +40,7 @@ class AuthForm extends React.Component{
                     <input type="password" className="form-control mt-3" placeholder="Пароль" onChange={this.typing_password}/>
                     <button type="submit" className="btn btn-primary mt-2">Авторизация</button>
                     { this.props.user && 
-                    <div class="alert alert-danger mt-2 ml-2 " role="alert">
-                        Неверный логин или пароль. Попробуй еще. 
-                    </div>
-                  
+                    <div class="alert alert-danger mt-2 ml-2 " role="alert">Неверный логин или пароль. Попробуй еще.</div>
                     }
                 </form>
             </div>

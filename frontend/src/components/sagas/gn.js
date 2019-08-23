@@ -2,6 +2,7 @@ import axios from 'axios';
 import { put, takeEvery, call } from 'redux-saga/effects';
 import qs from 'qs';
 import Cookies from 'universal-cookie';
+import { server } from '../News';
 
 const cookies = new Cookies();
 
@@ -64,25 +65,25 @@ export function* try_sending_ava(data) {
 // Sagas' workers
 export function* getTotalAsync() {
     const data = yield call(() => {
-        return axios.get('http://localhost:8000/api/news/total/')})
+        return axios.get(server + 'api/news/total/')})
     yield put(requestTotal(data.data));
 }
 
 export function* getNewsAsync(_data) {
     const data = yield call(() => {
-        return axios.get('http://localhost:8000/api/news/', {params: {page: _data.data.page, news_on_page: _data.data.news_on_page}})});
+        return axios.get(server + 'api/news/', {params: {page: _data.data.page, news_on_page: _data.data.news_on_page}})});
     yield put(request_news(data.data))
 }
 
 export function* autorizeAsync(info){
     const data = yield call(() => {
-        return axios.post('http://localhost:8000/api/auth', qs.stringify({username: info.data.login, password: info.data.pass}));  } );  
+        return axios.post(server + 'api/auth', qs.stringify({username: info.data.login, password: info.data.pass}));  } );  
     yield put(getting_token(data.data));
 }
 
 export function* sending_new_async(info){
     const data = yield call(() => {
-        return axios.post('http://localhost:8000/api/news/add', qs.stringify({text: info.data.text, title: info.data.title, token: info.data.token}));  } );  
+        return axios.post(server + 'api/news/add', qs.stringify({text: info.data.text, title: info.data.title, token: info.data.token}));  } );  
     yield put(answer_for_creating_new(data.data));
 }
 
@@ -91,6 +92,6 @@ export function* sending_ava_async(info){
         const fd = new FormData() ;
         fd.append('file', info.data.file);
         fd.append('token', info.data.token);
-        return axios.post('http://localhost:8000/api/ava/change', fd);  } );  
+        return axios.post(server + 'api/ava/change', fd);  } );  
     yield put(answer_for_ava(data.data));
 }

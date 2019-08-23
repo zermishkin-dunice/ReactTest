@@ -29,4 +29,9 @@ class New(models.Model):
 class Avatar(models.Model):
     user = models.OneToOneField(User, on_delete=models.PROTECT, primary_key=True,)
     avatar = models.FileField(upload_to='avatars/', verbose_name="Картинка к новости")
+    class Meta:
+        verbose_name = "Аватарка"
+        verbose_name_plural = "Аватарки"
+
+    
 

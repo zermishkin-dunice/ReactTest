@@ -2,6 +2,7 @@ import React from 'react';
 import store from './store';
 import {connect} from 'react-redux';
 import axios from 'axios';
+import { server } from './News';
 
 class SearchForm extends React.Component{
     constructor(props){
@@ -18,7 +19,7 @@ class SearchForm extends React.Component{
     
     onSubmit(event) {
         event.preventDefault();
-        axios.get(`http://localhost:8000/get/news/search/?type=${this.state.search}&word=${this.state.word}`)
+        axios.get(server + `get/news/search/?type=${this.state.search}&word=${this.state.word}`)
           .then(res => {
             const news_ = res.data;
             store.dispatch({

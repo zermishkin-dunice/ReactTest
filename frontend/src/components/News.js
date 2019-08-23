@@ -11,6 +11,9 @@ import Cookies from 'universal-cookie';
 import AddNewModal from './AddNewModal';
 
 export const news_on_page = 5;
+export const server = "http://127.0.0.1:8000/"
+
+
 const cookies = new Cookies();
 
 class Container extends React.Component {

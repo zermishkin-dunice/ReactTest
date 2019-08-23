@@ -2,7 +2,7 @@ export const gettotal = () => {
     return { type: 'GET_TOTAL_BY_USER' }
   };
   
- export const getnewsonpage = (data) => {
+export const getnewsonpage = (data) => {
     return {type:'GET_NEWS_ON_PAGE', data: data};
   }
 

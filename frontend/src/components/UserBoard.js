@@ -2,6 +2,7 @@ import React from 'react';
 import Cookies from 'universal-cookie';
 import {connect} from 'react-redux';
 import { logout, sendavatar } from './actions';
+import { server } from './News';
 
 
 const cookies = new Cookies();
@@ -43,7 +44,7 @@ class UserBoard extends React.Component{
           let inlinestyle = {
             maxHeight: "150px",
           }
-          let url_avatars = "http://127.0.0.1:8000/uploads/" + cookies.get('avatar');
+          let url_avatars = server + "uploads/" + cookies.get('avatar');
           return(
             <div className="new border p-3 mt-3 rounded flex-fill">
                 <div className="row">
