@@ -1,7 +1,7 @@
 import React from 'react';
 import Cookies from 'universal-cookie';
 import {connect} from 'react-redux';
-import { logout } from './actions';
+import { logout, sendavatar } from './actions';
 
 
 const cookies = new Cookies();
@@ -12,6 +12,7 @@ class UserBoard extends React.Component{
         this.state = {
         };
         this.logout = this.logout.bind(this);
+        this.avatar_change = this.avatar_change.bind(this);
       }
       
     componentDidMount() {
@@ -27,6 +28,15 @@ class UserBoard extends React.Component{
         this.props.dispatch(logout());
     }
 
+    avatar_change(event){
+        console.log("Отработка формы на плашке, ", event.target.files[0]);
+        let data = {
+            token: cookies.get("token"),
+            file: event.target.files[0],
+        }
+        this.props.dispatch(sendavatar(data));
+    }
+
     render(){
           let inlinestyle = {
             maxHeight: "150px",
@@ -40,13 +50,14 @@ class UserBoard extends React.Component{
                     </div>
                     <div className="col-10">
                         <h2>{cookies.get("first_name")} {cookies.get("last_name")}</h2>
-                        <p>Заслуженный автор новостей на тестовых заданиях </p>
                         <div className="btn-group" role="group" aria-label="Basic example">
                             <button type="button" className="btn btn-danger" onClick={this.logout}>Разлогиниться</button>
                             <button type="button" className="btn btn-info" data-toggle="modal" data-target="#exampleModal">Добавить новую новость</button>
-                            <button type="button" className="btn btn-success">Сменить аватарку</button>
                         </div>
-                            
+                        <div className="mt-3">
+                            <label for="avatar_change">Сменить аватарку<br /></label>
+                            <input type="file" class="form-control-file" onChange={this.avatar_change}id="avatar_change" />
+                        </div>    
                         
                     </div>
                   </div>
@@ -62,6 +73,7 @@ const mapStateToProps = function(state){
     return {
         user: state.user,
         token: state.token,
+        avatar: state.avatar,
     };
 }
 export default connect(mapStateToProps)(UserBoard);

@@ -14,6 +14,7 @@ from rest_framework.authtoken.models import Token
 import datetime
 
 
+
 class GetNews(TemplateView):
     def get(self, request):
         if (request.GET.get("page")):
@@ -124,6 +125,35 @@ class Adding_News(TemplateView):
         response['Access-Control-Allow-Origin'] = '*'
         response['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
         return response
+
+class Change_Ava(TemplateView):
+    def options(self, request):
+        response = HttpResponse()
+        response['Access-Control-Allow-Origin'] = '*'
+        response['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
+        return response
+    def post(self, request):
+        print("Метод POST из Change_Ava")
+        print("request-post: ", request.POST)
+        print("request-file: ", request.FILES)
+        get_token = request.POST.get("token")
+        token = Token.objects.get(key = get_token)
+        user = User.objects.get(pk=token.user_id)
+        print("Найден пользователь ", user)
+        avatar = Avatar.objects.get(pk=user.id)
+        print("Найден аватар ", avatar)       
+        avatar.avatar = request.FILES['file']
+        avatar.save()
+        data = {}
+        data["avatar"] = str(avatar.avatar)
+        response = JsonResponse(data)
+        response['Access-Control-Allow-Origin'] = '*'
+        response['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
+        return response
+
+
+
+
 
 class ExampleView(APIView):
     # authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]

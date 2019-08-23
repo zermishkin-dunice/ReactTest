@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import { get_total, get_news, try_authorize, try_sending_new } from './sagas/gn';
+import { get_total, get_news, try_authorize, try_sending_new, try_sending_ava } from './sagas/gn';
 
 const saga_get_total = createSagaMiddleware();
 
@@ -26,6 +26,9 @@ var Reducer = function(state, action){
     if (action.type === "RESULT_OF_SENDING"){
         return {...state, result_of_sending: action.data}
     }
+    if (action.type === "AVATAR"){
+        return {...state, avatar: action.data}
+    }
     return state;
 };
 
@@ -38,7 +41,6 @@ saga_get_total.run(get_total);
 saga_get_total.run(get_news);
 saga_get_total.run(try_authorize);
 saga_get_total.run(try_sending_new);
-
-
+saga_get_total.run(try_sending_ava);
 
 export default store;

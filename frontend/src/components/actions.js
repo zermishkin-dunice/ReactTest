@@ -21,3 +21,7 @@ export const logout = () => {
 export const sending_news = (data) => {
   return { type: "SENDING_NEW", data: data }
 }
+
+export const sendavatar = (data) => {
+  return { type: "SENDING_AVATAR", data: data }
+}
