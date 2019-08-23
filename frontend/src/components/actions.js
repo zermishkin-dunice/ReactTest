@@ -1,13 +1,13 @@
 export const gettotal = () => {
-    return { type: 'GET_TOTAL_BY_USER' }
-  };
-  
+  return { type: 'GET_TOTAL_BY_USER' }
+};
+
 export const getnewsonpage = (data) => {
-    return {type:'GET_NEWS_ON_PAGE', data: data};
-  }
+  return { type: 'GET_NEWS_ON_PAGE', data: data };
+}
 
 export const page_action = (page) => {
-    return { type: "PAGE", page: page }
+  return { type: "PAGE", page: page }
 }
 
 export const authorize = (data) => {

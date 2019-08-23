@@ -1,28 +1,28 @@
 import React from 'react';
 import Cookies from 'universal-cookie';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import { logout, sendavatar } from './actions';
 import { server } from './News';
 
 
 const cookies = new Cookies();
 
-class UserBoard extends React.Component{
+class UserBoard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
         };
         this.logout = this.logout.bind(this);
         this.avatar_change = this.avatar_change.bind(this);
-      }
-      
+    }
+
     componentDidMount() {
-        if (this.props.token){
+        if (this.props.token) {
             cookies.set('token', this.props.token);
-            }
         }
-    
-    logout(){
+    }
+
+    logout() {
         cookies.remove("token");
         cookies.remove("first_name");
         cookies.remove("last_name");
@@ -31,7 +31,7 @@ class UserBoard extends React.Component{
         this.props.dispatch(logout());
     }
 
-    avatar_change(event){
+    avatar_change(event) {
         console.log("Отработка формы на плашке, ", event.target.files[0]);
         let data = {
             token: cookies.get("token"),
@@ -40,12 +40,12 @@ class UserBoard extends React.Component{
         this.props.dispatch(sendavatar(data));
     }
 
-    render(){
-          let inlinestyle = {
+    render() {
+        let inlinestyle = {
             maxHeight: "150px",
-          }
-          let url_avatars = server + "uploads/" + cookies.get('avatar');
-          return(
+        }
+        let url_avatars = server + "uploads/" + cookies.get('avatar');
+        return (
             <div className="new border p-3 mt-3 rounded flex-fill">
                 <div className="row">
                     <div className="col-2">
@@ -59,20 +59,20 @@ class UserBoard extends React.Component{
                         </div>
                         <div className="mt-3">
                             <label for="avatar_change">Сменить аватарку<br /></label>
-                            <input type="file" class="form-control-file" onChange={this.avatar_change}id="avatar_change" />
-                        </div>    
-                        
+                            <input type="file" class="form-control-file" onChange={this.avatar_change} id="avatar_change" />
+                        </div>
+
                     </div>
-                  </div>
-                  
-                  </div>
-                  
-                  
-          )
-      }
+                </div>
+
+            </div>
+
+
+        )
+    }
 }
 
-const mapStateToProps = function(state){
+const mapStateToProps = function (state) {
     return {
         user: state.user,
         token: state.token,
