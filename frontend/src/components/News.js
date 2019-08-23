@@ -10,7 +10,7 @@ import UserBoard from './UserBoard';
 import Cookies from 'universal-cookie';
 import AddNewModal from './AddNewModal';
 
-export const news_on_page = 5;
+export const news_on_page = 2;
 const cookies = new Cookies();
 
 class Container extends React.Component {
@@ -25,7 +25,11 @@ class Container extends React.Component {
 
       componentDidMount() {
       this.props.dispatch(gettotal());
-      this.props.dispatch(getnewsonpage({page: this.state.page, news_on_page}));
+      let _data = {
+        page: this.state.page, 
+        news_on_page: news_on_page,
+      }
+      this.props.dispatch(getnewsonpage(_data));
       }
 
     render() {

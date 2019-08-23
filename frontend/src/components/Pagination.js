@@ -40,7 +40,7 @@ class Pagination extends React.Component{
                 <ul class="pagination">
                     { this.state.page > 1 && <li class="page-item"><a class="page-link" href="#" onClick={this.goToBack} tabindex="-1" aria-disabled="true">Назад</a></li>}
                     <li class="page-item" aria-current="page"><a class="page-link" href="#">{this.state.page}<span class="sr-only">(current)</span></a></li>
-                    { this.props.total > this.state.page*3 && <li class="page-item"><a class="page-link" href="#" onClick={this.goToForward}>Вперед</a> </li> }
+                    { this.props.total > this.state.page*news_on_page && <li class="page-item"><a class="page-link" href="#" onClick={this.goToForward}>Вперед</a> </li> }
                     </ul>
             </nav>
         )
@@ -49,7 +49,8 @@ class Pagination extends React.Component{
 
 const mapStateToProps = function(state){
     return {
-        page: state.page,    
+        page: state.page,
+        total: state.total,    
     };
 }
 

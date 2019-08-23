@@ -44,7 +44,8 @@ const answer_for_ava = (data) => {
 export function* get_total() {
     yield takeEvery('GET_TOTAL_BY_USER', getTotalAsync);
   }
-export function* get_news(page) {
+export function* get_news(data) {
+    console.log("get_news", data);
     yield takeEvery('GET_NEWS_ON_PAGE', getNewsAsync);
 }
 
@@ -57,7 +58,6 @@ export function* try_sending_new(data) {
 }
 
 export function* try_sending_ava(data) {
-    console.log("try_sending_ava. Data: ", data);
     yield takeEvery('SENDING_AVATAR', sending_ava_async);
 }
 
@@ -68,9 +68,10 @@ export function* getTotalAsync() {
     yield put(requestTotal(data.data));
 }
 
-export function* getNewsAsync(page, news_on_page) {
+export function* getNewsAsync(_data) {
     const data = yield call(() => {
-        return axios.get('http://localhost:8000/get/news/', {params: {page: page.page, news_on_page: news_on_page}})});
+        console.log("getNewsAsync!", _data);
+        return axios.get('http://localhost:8000/get/news/', {params: {page: _data.data.page, news_on_page: _data.data.news_on_page}})});
     yield put(request_news(data.data))
 }
 
