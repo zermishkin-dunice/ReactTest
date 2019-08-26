@@ -19,7 +19,7 @@ class SearchForm extends React.Component {
 
     onSubmit(event) {
         event.preventDefault();
-        axios.get(server + `get/news/search/?type=${this.state.search}&word=${this.state.word}`)
+        axios.get(server + `api/news/search/?type=${this.state.search}&word=${this.state.word}`)
             .then(res => {
                 const news_ = res.data;
                 store.dispatch({

@@ -64,7 +64,7 @@ class Find(TemplateView):
         if (how == "title"):
             news = New.objects.filter(title__contains=text)
         json_for_finding_news = list(news.values(
-            'title', 'text', 'date', 'author', 'id', ))
+            'title', 'text', 'date', 'author', 'id', 'picture' ))
         response = JsonResponse(json_for_finding_news, safe=False)
         response['Access-Control-Allow-Origin'] = '*'
         return response
