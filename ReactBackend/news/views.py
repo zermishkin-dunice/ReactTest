@@ -115,8 +115,9 @@ class Adding_News(TemplateView):
         get_token = request.POST.get("token")
         token = Token.objects.get(key=get_token)
         user = User.objects.get(pk=token.user_id)
+        picture = request.FILES['file']
         new = New.objects.create(
-            title=title, text=text, date=datetime.datetime.now(), author=user)
+            title=title, text=text, date=datetime.datetime.now(), author=user, picture = picture)
         new.save()
         response = HttpResponse("Успешное сохранение")
         response['Access-Control-Allow-Origin'] = '*'
@@ -181,10 +182,10 @@ class AddAuthor(TemplateView):
             new_user.save()
             Token.objects.get_or_create(user=new_user)
             Avatar.objects.get_or_create(user=new_user)
-            response = HttpResponse("User created successfully.")
+            response = HttpResponse("User {0} created successfully.".format(username))
 
         else:
             response = HttpResponse(
-                "A user with this username already exists.")
+                "A user with username <{0}> already exists.".format(username))
         response['Access-Control-Allow-Origin'] = '*'
         return response

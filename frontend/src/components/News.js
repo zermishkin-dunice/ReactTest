@@ -27,8 +27,9 @@ class Container extends React.Component {
         };
     }
 
-    componentDidMount() {
+    componentWillMount(){
         this.props.dispatch(gettotal());
+        
         let _data = {
             page: this.state.page,
             news_on_page: news_on_page,
@@ -36,13 +37,12 @@ class Container extends React.Component {
         this.props.dispatch(getnewsonpage(_data));
     }
 
+
     render() {
         const {
             news,
-        } = this.props;
-
-        let user = this.props.user;
-
+            } = this.props;
+        
         return (
             <div className="container">
                 <Navigation />
@@ -73,6 +73,8 @@ const mapStateToProps = function (state) {
         total: state.total,
         page: state.page,
         user: state.user,
+        result_of_sending: state.result_of_sending,
+        avatar: state.avatar,
     };
 }
 

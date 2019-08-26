@@ -27,7 +27,6 @@ const getting_token = (data) => {
         cookies.set("avatar", data.avatar);
         cookies.set("username", data.username)
         cookies.set("id", data.id)
-
     }
     return { type: "GET_USER", data: data };
 }
@@ -37,12 +36,11 @@ const answer_for_creating_new = (data) => {
 }
 
 const answer_for_ava = (data) => {
-    cookies.set("avatar", data.avatar);
+    cookies.set("avatar", data.avatar, {path: '/'});
     return { type: "AVATAR", data: data.avatar };
 }
 
 const answer_for_creating_author = (data) => {
-    console.log("Ответ от сервера из answer_for_creating_author: ", data)
     return { type: "USER_CREATE", data: data };
 }
 
@@ -95,7 +93,12 @@ export function* autorizeAsync(info) {
 
 export function* sending_new_async(info) {
     const data = yield call(() => {
-        return axios.post(server + 'api/news/add', qs.stringify({ text: info.data.text, title: info.data.title, token: info.data.token }));
+        const fd = new FormData();
+        fd.append('text', info.data.text);
+        fd.append('title', info.data.title);
+        fd.append('token', info.data.token);
+        fd.append('file', info.data.file);
+        return axios.post(server + 'api/news/add', fd);
     });
     yield put(answer_for_creating_new(data.data));
 }

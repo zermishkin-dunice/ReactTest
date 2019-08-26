@@ -30,12 +30,12 @@ class New extends React.Component {
 
     render() {
         let image_scr = server + "uploads/" + this.props.picture;
-        let id = cookies.get("id");
+        let link = 'users/' + this.props.author;
         return (
             <div className="new border p-3 mt-3 rounded">
                 <h1>{this.props.title}</h1>
-                <i><a href="#">{id == this.props.author ? "Изменить картинку записи" : ""}</a></i>
-                <p class='font-italic'>{this.state.author_name} {this.state.author_surname}, {this.props.date}</p>
+                <i><p class='font-italic'><a href={link}>{this.state.author_name} {this.state.author_surname}</a>, {this.props.date}</p></i>
+                
                 <img src={image_scr} alt={this.props.title} class="rounded mx-auto d-block img-fluid" />
                 {this.props.text} <br />
 

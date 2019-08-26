@@ -11,6 +11,7 @@ class RegModal extends React.Component {
             firstname: "",
             lastname: "",
             email: "",
+            correct: true,
 
         };
         this.typing_login = this.typing_login.bind(this);
@@ -50,7 +51,21 @@ class RegModal extends React.Component {
             lastname: this.state.lastname,
             email: this.state.email,
         }
-        this.props.dispatch(registrate_action(data));
+        if (this.state.login && this.state.password) {
+            this.setState({ correct: true, })
+            this.props.dispatch(registrate_action(data));
+            this.setState({
+                login: "",
+                password: "",
+                firstname: "",
+                lastname: "",
+                email: "",
+            })
+        }
+
+        else {
+            this.setState({ correct: false, })
+        }
     }
 
 
@@ -72,10 +87,11 @@ class RegModal extends React.Component {
                                 <input type="text" required className="form-control mt-3" placeholder="Имя" onChange={this.typing_firstname} />
                                 <input type="text" required className="form-control mt-3" placeholder="Фамилия" onChange={this.typing_lastname} />
                                 <input type="e-mail" required className="form-control mt-3" placeholder="E-Mail" onChange={this.typing_email} />
-                                <button type="button" class="btn btn-secondary mt-3" data-dismiss="modal">Передумал</button>
+                                <button type="button" class="btn btn-secondary mt-3" data-dismiss="modal">Закрыть</button>
                                 <button type="button" class="btn btn-primary mt-3 ml-2" onClick={this.registrate}>Зарегистрироваться</button>
                             </form>
-                            {this.props.result}
+                            {!this.state.correct && <p className="mt-2">Заполни хотя бы логин и пароль, пожалста. </p>}
+                            {this.props.result && <p className="mt-2">{this.props.result} <a href="#" data-dismiss="modal">Закрыть</a></p>}
 
                         </div>
                     </div>

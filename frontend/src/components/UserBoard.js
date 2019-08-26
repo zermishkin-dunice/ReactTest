@@ -32,7 +32,6 @@ class UserBoard extends React.Component {
     }
 
     avatar_change(event) {
-        console.log("Отработка формы на плашке, ", event.target.files[0]);
         let data = {
             token: cookies.get("token"),
             file: event.target.files[0],
@@ -40,16 +39,17 @@ class UserBoard extends React.Component {
         this.props.dispatch(sendavatar(data));
     }
 
+    
+
     render() {
-        let inlinestyle = {
-            maxHeight: "150px",
-        }
-        let url_avatars = server + "uploads/" + cookies.get('avatar');
+        let link_to_profile = 'users/' + cookies.get("id");
+        let link_to_image = server + 'uploads/' + cookies.get("avatar");
+        
         return (
             <div className="new border p-3 mt-3 rounded flex-fill">
                 <div className="row">
                     <div className="col-2">
-                        <img src={url_avatars} className="img-thumbnail" style={inlinestyle} alt="Адаптивные изображения" />
+                    <a href={link_to_profile}><img src={link_to_image} className="img-thumbnail mt-3" alt="Адаптивные изображения" /></a>
                     </div>
                     <div className="col-10">
                         <h2>{cookies.get("first_name")} {cookies.get("last_name")}</h2>
@@ -57,17 +57,9 @@ class UserBoard extends React.Component {
                             <button type="button" className="btn btn-danger" onClick={this.logout}>Разлогиниться</button>
                             <button type="button" className="btn btn-info" data-toggle="modal" data-target="#exampleModal">Добавить новую новость</button>
                         </div>
-                        <div className="mt-3">
-                            <label for="avatar_change">Сменить аватарку<br /></label>
-                            <input type="file" class="form-control-file" onChange={this.avatar_change} id="avatar_change" />
-                        </div>
-
                     </div>
                 </div>
-
             </div>
-
-
         )
     }
 }

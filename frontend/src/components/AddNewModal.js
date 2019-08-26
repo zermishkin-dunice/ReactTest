@@ -14,6 +14,7 @@ class AddForm extends React.Component {
     this.typing_text = this.typing_text.bind(this);
     this.typing_title = this.typing_title.bind(this);
     this.sendnew = this.sendnew.bind(this);
+    this.picture_change = this.picture_change.bind(this);
   }
 
   typing_title(event) {
@@ -24,18 +25,20 @@ class AddForm extends React.Component {
     this.setState({ text: event.target.value })
   }
 
+  picture_change(event){
+    this.setState({file: event.target.files[0]});
+  }
+
   sendnew() {
     let data = {
       text: this.state.text,
       title: this.state.title,
       token: cookies.get("token"),
+      file: this.state.file,
     };
+    console.log("Отправка со страницы");
     this.props.dispatch(sending_news(data));
-    this.props.dispatch(gettotal());
-    this.props.dispatch(getnewsonpage({ page: this.props.page, news_on_page }));
-
-
-  }
+}
 
   render() {
     return (
@@ -52,6 +55,8 @@ class AddForm extends React.Component {
               <form onSubmit={this.sendnew}>
                 <input type="text" className="form-control" placeholder="Заголовок" onChange={this.typing_title} />
                 <textarea className="form-control mt-3" placeholder="Тело новости" onChange={this.typing_text}></textarea>
+                <input type="file" className="form-control" placeholder="Картинка к новости" onChange={this.picture_change} />
+                
                 <button type="button" class="btn btn-secondary mt-3" data-dismiss="modal">Передумал</button>
                 <button type="submit" class="btn btn-primary mt-3 ml-1" data-dismiss="modal" onClick={this.sendnew}>Отправить</button>
               </form>
