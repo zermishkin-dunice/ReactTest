@@ -23,6 +23,7 @@ class Container extends React.Component {
             news: [],
             page: 1,
             token: null,
+            total: 0,
         };
     }
 

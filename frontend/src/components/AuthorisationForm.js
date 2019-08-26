@@ -40,7 +40,7 @@ class AuthForm extends React.Component {
                     <input type="text" className="form-control" placeholder="Логин" onChange={this.typing_login} />
                     <input type="password" className="form-control mt-3" placeholder="Пароль" onChange={this.typing_password} />
                     <div class="btn-group" role="group" aria-label="Basic example">
-                        <button type="button" className="btn btn-primary mt-2" onClick={this.authorizate}>Авторизация</button>
+                        <button type="submit" className="btn btn-primary mt-2" onClick={this.authorizate}>Авторизация</button>
                         <button type="button" class="btn btn-success mt-2" data-toggle="modal" data-target="#RegModal">Регистрация</button>
                     </div>
                     {this.props.user &&

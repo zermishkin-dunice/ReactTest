@@ -32,6 +32,3 @@ class Avatar(models.Model):
     class Meta:
         verbose_name = "Аватарка"
         verbose_name_plural = "Аватарки"
-
-    
-

@@ -1,14 +1,11 @@
-from django.shortcuts import render, get_object_or_404
 from django.views.generic import TemplateView
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.contrib.auth.models import User
 from .models import New, Avatar
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
-from django.contrib.auth import authenticate, login
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.response import Response
+#from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
+from django.contrib.auth import authenticate
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 import datetime
@@ -94,7 +91,6 @@ class Auth2(TemplateView):
             return response
         else:
             otvet = "error login. Time: " + str(datetime.datetime.now())
-            print(otvet)
             response = HttpResponse(otvet)
             response['Access-Control-Allow-Origin'] = '*'
             return response
@@ -149,7 +145,6 @@ class Change_Ava(TemplateView):
 
 class ExampleView(APIView):
     def options(self, request):
-        print("Метод OPTIONS")
         response = HttpResponse()
         response['Access-Control-Allow-Origin'] = '*'
         return response
@@ -176,7 +171,6 @@ class AddAuthor(TemplateView):
         user = User.objects.filter(username=username).first()
         print("Пользователь", user)
         if user is None:
-            print("Пользователь нон")
             new_user = User.objects.create_user(
                 username=username,
                 password=password,
@@ -190,7 +184,7 @@ class AddAuthor(TemplateView):
             response = HttpResponse("User created successfully.")
 
         else:
-            print("Пользователь не нон")
-            response = HttpResponse("A user with this username already exists.")        
+            response = HttpResponse(
+                "A user with this username already exists.")
         response['Access-Control-Allow-Origin'] = '*'
         return response
