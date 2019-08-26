@@ -25,3 +25,7 @@ export const sending_news = (data) => {
 export const sendavatar = (data) => {
   return { type: "SENDING_AVATAR", data: data }
 }
+
+export const registrate_action = (data) => {
+  return { type: "REGISTRATE_PAGE", data: data }
+}

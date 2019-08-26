@@ -14,8 +14,6 @@ from rest_framework.authtoken.models import Token
 import datetime
 
 
-
-
 class GetNews(TemplateView):
     def get(self, request):
         if (request.GET.get("page")):
@@ -28,7 +26,8 @@ class GetNews(TemplateView):
             new_on_page = 3
         news = New.objects.all().order_by(
             '-date')[(int(page)*new_on_page-new_on_page):int(page)*new_on_page]
-        lis = list(news.values('title', 'text', 'date', 'author', 'id', 'picture' ))
+        lis = list(news.values('title', 'text',
+                               'date', 'author', 'id', 'picture'))
         response = JsonResponse(lis, safe=False)
         response['Access-Control-Allow-Origin'] = '*'
         response['Total-news'] = len(New.objects.all())
@@ -60,11 +59,11 @@ class Find(TemplateView):
         how = request.GET.get("type")
         text = request.GET.get("word")
         if (how == "text"):
-            news = New.objects.filter(text__contains=text)
+            news = New.objects.filter(text__icontains=text)
         if (how == "title"):
-            news = New.objects.filter(title__contains=text)
+            news = New.objects.filter(title__icontains=text)
         json_for_finding_news = list(news.values(
-            'title', 'text', 'date', 'author', 'id', 'picture' ))
+            'title', 'text', 'date', 'author', 'id', 'picture'))
         response = JsonResponse(json_for_finding_news, safe=False)
         response['Access-Control-Allow-Origin'] = '*'
         return response
@@ -112,27 +111,31 @@ class Adding_News(TemplateView):
         response['Access-Control-Allow-Origin'] = '*'
         response['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
         return response
+
     def post(self, request):
         title = request.POST.get("title")
         text = request.POST.get("text")
         user = User.objects.get(pk=1)
         get_token = request.POST.get("token")
-        token = Token.objects.get(key = get_token)
+        token = Token.objects.get(key=get_token)
         user = User.objects.get(pk=token.user_id)
-        new = New.objects.create(title = title, text = text, date = datetime.datetime.now(), author = user)
+        new = New.objects.create(
+            title=title, text=text, date=datetime.datetime.now(), author=user)
         new.save()
         response = HttpResponse("Успешное сохранение")
         response['Access-Control-Allow-Origin'] = '*'
         return response
+
 
 class Change_Ava(TemplateView):
     def options(self, request):
         response = HttpResponse()
         response['Access-Control-Allow-Origin'] = '*'
         return response
+
     def post(self, request):
         get_token = request.POST.get("token")
-        token = Token.objects.get(key = get_token)
+        token = Token.objects.get(key=get_token)
         user = User.objects.get(pk=token.user_id)
         avatar = Avatar.objects.get(pk=user.id)
         avatar.avatar = request.FILES['file']
@@ -144,28 +147,50 @@ class Change_Ava(TemplateView):
         return response
 
 
-
-
-
 class ExampleView(APIView):
-    # authentication_classes = [SessionAuthentication, BasicAuthentication, TokenAuthentication]
-    # permission_classes = [IsAuthenticated]
     def options(self, request):
         print("Метод OPTIONS")
         response = HttpResponse()
         response['Access-Control-Allow-Origin'] = '*'
-        response['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
-        print(response)
         return response
+
     def post(self, request):
-        print("Метод POST")
         title = request.POST.get("title")
         text = request.POST.get("text")
         author = request.user
-        new = New.objects.create(title = title, text = text, date = datetime.datetime.now(), author = author)
+        new = New.objects.create(
+            title=title, text=text, date=datetime.datetime.now(), author=author)
         new.save()
         response = HttpResponse("Успешное сохранение")
         response['Access-Control-Allow-Origin'] = '*'
-        response['Access-Control-Allow-Headers'] = 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers'
-        
+        return response
+
+
+class AddAuthor(TemplateView):
+    def post(self, request):
+        username = request.POST.get("username")
+        password = request.POST.get("password")
+        email = request.POST.get("email")
+        firstname = request.POST.get("firstname")
+        lastname = request.POST.get("lastname")
+        user = User.objects.filter(username=username).first()
+        print("Пользователь", user)
+        if user is None:
+            print("Пользователь нон")
+            new_user = User.objects.create_user(
+                username=username,
+                password=password,
+                email=email,
+                first_name=firstname,
+                last_name=lastname,
+            )
+            new_user.save()
+            Token.objects.get_or_create(user=new_user)
+            Avatar.objects.get_or_create(user=new_user)
+            response = HttpResponse("User created successfully.")
+
+        else:
+            print("Пользователь не нон")
+            response = HttpResponse("A user with this username already exists.")        
+        response['Access-Control-Allow-Origin'] = '*'
         return response

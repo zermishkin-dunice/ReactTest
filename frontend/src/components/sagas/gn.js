@@ -41,6 +41,11 @@ const answer_for_ava = (data) => {
     return { type: "AVATAR", data: data.avatar };
 }
 
+const answer_for_creating_author = (data) => {
+    console.log("Ответ от сервера из answer_for_creating_author: ", data)
+    return { type: "USER_CREATE", data: data };
+}
+
 
 // Sagas' watchers
 export function* get_total() {
@@ -60,6 +65,10 @@ export function* try_sending_new(data) {
 
 export function* try_sending_ava(data) {
     yield takeEvery('SENDING_AVATAR', sending_ava_async);
+}
+
+export function* try_registrate(data) {
+    yield takeEvery('REGISTRATE_PAGE', registrate_async);
 }
 
 // Sagas' workers
@@ -99,4 +108,17 @@ export function* sending_ava_async(info) {
         return axios.post(server + 'api/ava/change', fd);
     });
     yield put(answer_for_ava(data.data));
+}
+
+export function* registrate_async(info) {
+    const data = yield call(() => {
+        return axios.post(server + 'api/author/add', qs.stringify({ 
+            username: info.data.username, 
+            password: info.data.password, 
+            firstname: info.data.firstname,
+            lastname: info.data.lastname,
+            email: info.data.email,
+         }));
+    });
+    yield put(answer_for_creating_author(data.data));
 }

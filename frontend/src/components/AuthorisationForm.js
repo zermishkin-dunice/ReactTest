@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { authorize } from './actions';
+import RegModal from './RegModal';
 
 class AuthForm extends React.Component {
     constructor(props) {
@@ -40,13 +41,15 @@ class AuthForm extends React.Component {
                     <input type="password" className="form-control mt-3" placeholder="Пароль" onChange={this.typing_password} />
                     <div class="btn-group" role="group" aria-label="Basic example">
                         <button type="button" className="btn btn-primary mt-2" onClick={this.authorizate}>Авторизация</button>
-                        <button type="button" class="btn btn-success mt-2">Регистрация</button>
+                        <button type="button" class="btn btn-success mt-2" data-toggle="modal" data-target="#RegModal">Регистрация</button>
                     </div>
                     {this.props.user &&
                         <div class="alert alert-danger mt-2 ml-2 " role="alert">Неверный логин или пароль. Попробуй еще.</div>
                     }
                 </form>
+                <RegModal />
             </div>
+            
         );
     }
 }

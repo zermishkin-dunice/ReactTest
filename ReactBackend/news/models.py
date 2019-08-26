@@ -27,8 +27,8 @@ class New(models.Model):
         return self.title
 
 class Avatar(models.Model):
-    user = models.OneToOneField(User, on_delete=models.PROTECT, primary_key=True,)
-    avatar = models.FileField(upload_to='avatars/', verbose_name="Картинка к новости")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True,)
+    avatar = models.FileField(upload_to='avatars/', verbose_name="Картинка к новости", default='avatars/anon.jpg')
     class Meta:
         verbose_name = "Аватарка"
         verbose_name_plural = "Аватарки"
