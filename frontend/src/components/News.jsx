@@ -11,7 +11,7 @@ import Cookies from 'universal-cookie';
 import AddNewModal from './AddNewModal';
 import PropTypes from 'prop-types';
 
-export const newsonpage = 5;
+export const newsonpage = 10;
 export const server = 'http://127.0.0.1:8000/';
 
 
@@ -26,7 +26,7 @@ class Container extends React.Component {
 
   componentWillMount() {
     const { page } = this.state;
-    const { gettotal: gettotalnews, getnewsonpage: getnews } = this.props;
+    const { gettotal: gettotalnews, getnewsonpage: getnews,  } = this.props;
 
     gettotalnews();
 
@@ -69,6 +69,7 @@ Container.propTypes = {
   gettotal: PropTypes.func.isRequired,
   news: PropTypes.objectOf.isRequired,
   total: PropTypes.number,
+  resultofsending: PropTypes.string,
 };
 
 Container.defaultProps = { total: 1 };

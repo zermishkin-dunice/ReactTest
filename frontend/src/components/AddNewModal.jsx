@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
 import { sendingnews } from './actions';
+import PropTypes from 'prop-types';
 
 
 const cookies = new Cookies();
@@ -11,35 +12,37 @@ class AddForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.typing_text = this.typing_text.bind(this);
-    this.typing_title = this.typing_title.bind(this);
+    this.typingtext = this.typingtext.bind(this);
+    this.typingtitle = this.typingtitle.bind(this);
     this.sendnew = this.sendnew.bind(this);
-    this.picture_change = this.picture_change.bind(this);
+    this.picturechange = this.picturechange.bind(this);
   }
 
-  typing_title(event) {
+  typingtitle(event) {
     this.setState({ title: event.target.value });
   }
 
-  typing_text(event) {
+  typingtext(event) {
     this.setState({ text: event.target.value });
   }
 
-  picture_change(event) {
+  picturechange(event) {
     this.setState({ file: event.target.files[0] });
   }
 
   sendnew() {
+    const { text, title, file } = this.state;
+    const { sendingnews: send, page } = this.props;
     const data = {
-      text: this.state.text,
-      title: this.state.title,
+      file,
+      page,
+      text,
+      title,
       token: cookies.get('token'),
-      file: this.state.file,
     };
 
 
-    console.log('Отправка со страницы');
-    this.props.dispatch(sendingnews(data));
+    send(data);
   }
 
   render() {
@@ -54,13 +57,13 @@ class AddForm extends React.Component {
               </button>
             </div>
             <div className="modal-body">
-              <form onSubmit={this.sendnew}>
-                <input type="text" className="form-control" placeholder="Заголовок" onChange={this.typing_title} />
-                <textarea className="form-control mt-3" placeholder="Тело новости" onChange={this.typing_text} />
-                <input type="file" className="form-control" placeholder="Картинка к новости" onChange={this.picture_change} />
+              <form>
+                <input type="text" className="form-control" placeholder="Заголовок" onChange={this.typingtitle} />
+                <textarea className="form-control mt-3" placeholder="Тело новости" onChange={this.typingtext} />
+                <input type="file" className="form-control" placeholder="Картинка к новости" onChange={this.picturechange} />
 
                 <button type="button" className="btn btn-secondary mt-3" data-dismiss="modal">Передумал</button>
-                <button type="submit" className="btn btn-primary mt-3 ml-1" data-dismiss="modal" onClick={this.sendnew}>Отправить</button>
+                <button type="button" className="btn btn-primary mt-3 ml-1" data-dismiss="modal" onClick={this.sendnew}>Отправить</button>
               </form>
             </div>
           </div>
@@ -71,6 +74,8 @@ class AddForm extends React.Component {
 
 }
 
+AddForm.propTypes = { sendingnews: PropTypes.func.isRequired, page: PropTypes.number };
+AddForm.defaultProps = { page: 1 };
 
 const mapStateToProps = function(state) {
   return {
@@ -81,4 +86,8 @@ const mapStateToProps = function(state) {
   };
 };
 
-export default connect(mapStateToProps)(AddForm);
+const mapDispatchToProps = function(dispatch) {
+  return { sendingnews: data => dispatch(sendingnews(data)) };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddForm);

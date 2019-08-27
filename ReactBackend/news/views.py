@@ -17,8 +17,8 @@ class GetNews(TemplateView):
             page = int(request.GET.get("page"))
         else:
             page = 1
-        if (request.GET.get("news_on_page")):
-            new_on_page = int(request.GET.get("news_on_page"))
+        if (request.GET.get("newsonpage")):
+            new_on_page = int(request.GET.get("newsonpage"))
         else:
             new_on_page = 3
         news = New.objects.all().order_by(

@@ -1,67 +1,68 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { registrateaction } from './actions';
+import PropTypes from 'prop-types';
 
 class RegModal extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      login: '',
-      password: '',
+      correct: true,
+      email: '',
       firstname: '',
       lastname: '',
-      email: '',
-      correct: true,
-
+      password: '',
+      username: '',
     };
-    this.typing_login = this.typing_login.bind(this);
-    this.typing_password = this.typing_password.bind(this);
-    this.typing_firstname = this.typing_firstname.bind(this);
-    this.typing_lastname = this.typing_lastname.bind(this);
-    this.typing_email = this.typing_email.bind(this);
+    this.typinglogin = this.typinglogin.bind(this);
+    this.typingpassword = this.typingpassword.bind(this);
+    this.typingfirstname = this.typingfirstname.bind(this);
+    this.typinglastname = this.typinglastname.bind(this);
+    this.typingemail = this.typingemail.bind(this);
     this.registrate = this.registrate.bind(this);
   }
 
-  typing_login(event) {
-    this.setState({ login: event.target.value });
+  typinglogin(event) {
+    this.setState({ username: event.target.value });
   }
 
-  typing_password(event) {
+  typingpassword(event) {
     this.setState({ password: event.target.value });
   }
 
-  typing_firstname(event) {
+  typingfirstname(event) {
     this.setState({ firstname: event.target.value });
   }
 
-  typing_lastname(event) {
+  typinglastname(event) {
     this.setState({ lastname: event.target.value });
   }
 
-  typing_email(event) {
+  typingemail(event) {
     this.setState({ email: event.target.value });
   }
 
   registrate(event) {
     event.preventDefault();
+    const { username, password, firstname, lastname, email } = this.state;
     const data = {
-      username: this.state.login,
-      password: this.state.password,
-      firstname: this.state.firstname,
-      lastname: this.state.lastname,
-      email: this.state.email,
+      email,
+      firstname,
+      lastname,
+      password,
+      username,
     };
 
-    if (this.state.login && this.state.password && this.state.firstname && this.state.lastname && this.state.email) {
+    if (username && password && firstname && lastname && email) {
       this.setState({ correct: true });
-      this.props.dispatch(registrateaction(data));
+      registrateaction(data);
       this.setState({
-        login: '',
-        password: '',
+        email: '',
         firstname: '',
         lastname: '',
-        email: '',
+        password: '',
+        username: '',
       });
     } else {
       this.setState({ correct: false });
@@ -70,8 +71,18 @@ class RegModal extends React.Component {
 
 
   render() {
+    const { correct } = this.state;
+    const { result } = this.props;
+
     return (
-      <div className="modal fade" id="RegModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div
+        className="modal fade"
+        id="RegModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
@@ -82,26 +93,56 @@ class RegModal extends React.Component {
             </div>
             <div className="modal-body">
               <form>
-                <input type="text" required className="form-control" placeholder="Логин" onChange={this.typing_login} />
-                <input type="password" required className="form-control mt-3" placeholder="Пароль" onChange={this.typing_password} />
-                <input type="text" required className="form-control mt-3" placeholder="Имя" onChange={this.typing_firstname} />
-                <input type="text" required className="form-control mt-3" placeholder="Фамилия" onChange={this.typing_lastname} />
-                <input type="e-mail" required className="form-control mt-3" placeholder="E-Mail" onChange={this.typing_email} />
-                <button type="button" className="btn btn-secondary mt-3" data-dismiss="modal">Закрыть</button>
-                <button type="button" className="btn btn-primary mt-3 ml-2" onClick={this.registrate}>Зарегистрироваться</button>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Логин"
+                  onChange={this.typinglogin}
+                />
+                <input
+                  type="password"
+                  className="form-control mt-3"
+                  placeholder="Пароль"
+                  onChange={this.typingpassword}
+                />
+                <input
+                  type="text"
+                  className="form-control mt-3"
+                  placeholder="Имя"
+                  onChange={this.typingfirstname}
+                />
+                <input
+                  type="text"
+                  className="form-control mt-3"
+                  placeholder="Фамилия"
+                  onChange={this.typinglastname}
+                />
+                <input
+                  type="e-mail"
+                  className="form-control mt-3"
+                  placeholder="E-Mail"
+                  onChange={this.typingemail}
+                />
+                <button
+                  type="button"
+                  className="btn btn-secondary mt-3"
+                  data-dismiss="modal"
+                >
+                  Закрыть
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary mt-3 ml-2"
+                  onClick={this.registrate}
+                >
+                  Зарегистрироваться
+                </button>
               </form>
-              {!this.state.correct && <p className="mt-2">Нужно заполнить все поля, иначе ничего у нас не выйдет. </p>}
-              {this.props.result
-&& 
-<p className="mt-2">
-  {this.props.result}
-  {' '}
-  <a href="#" data-dismiss="modal">Закрыть</a>
-</p>
-
-
-
-              }
+              {!correct && <p className="mt-2">Нужно заполнить все поля, иначе ничего у нас не выйдет. </p>}
+              {result
+                && <p className="mt-2">
+                  {result}
+                  <a href="#" data-dismiss="modal">Закрыть</a></p>}
 
             </div>
           </div>
@@ -113,11 +154,19 @@ class RegModal extends React.Component {
 
 }
 
-const mapStateToProps = function(state) {
+RegModal.propTypes = { result: PropTypes.string };
+
+RegModal.defaultProps = { result: '', page: 1 };
+
+const mapDispatchToProps = function (dispatch) {
+  return { registrateaction: data => dispatch(registrateaction(data)) };
+};
+
+const mapStateToProps = function (state) {
   return {
-    user: state.user,
     result: state.user_create_result,
+    user: state.user,
   };
 };
 
-export default connect(mapStateToProps)(RegModal);
+export default connect(mapStateToProps, mapDispatchToProps)(RegModal);
