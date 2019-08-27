@@ -51,7 +51,7 @@ class RegModal extends React.Component {
             lastname: this.state.lastname,
             email: this.state.email,
         }
-        if (this.state.login && this.state.password) {
+        if (this.state.login && this.state.password && this.state.firstname && this.state.lastname && this.state.email) {
             this.setState({ correct: true, })
             this.props.dispatch(registrate_action(data));
             this.setState({
@@ -90,7 +90,7 @@ class RegModal extends React.Component {
                                 <button type="button" class="btn btn-secondary mt-3" data-dismiss="modal">Закрыть</button>
                                 <button type="button" class="btn btn-primary mt-3 ml-2" onClick={this.registrate}>Зарегистрироваться</button>
                             </form>
-                            {!this.state.correct && <p className="mt-2">Заполни хотя бы логин и пароль, пожалста. </p>}
+                            {!this.state.correct && <p className="mt-2">Нужно заполнить все поля, иначе ничего у нас не выйдет. </p>}
                             {this.props.result && <p className="mt-2">{this.props.result} <a href="#" data-dismiss="modal">Закрыть</a></p>}
 
                         </div>

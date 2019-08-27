@@ -40,7 +40,7 @@ class SearchForm extends React.Component {
 
     render() {
         return (
-            <div class="new border p-3 mt-3 mr-3 rounded flex-fill">
+            <div class="new border p-3 mt-3 mr-3 rounded flex-fill col-5">
                 <form onSubmit={this.onSubmit}>
                     <input type="text" className="form-control" placeholder="Искать..." onChange={this.onChangeText} />
                     <select class="form-control mt-3" onChange={this.onChangeSelect}>>

@@ -50,6 +50,7 @@ class UserBoard extends React.Component {
                 <div className="row">
                     <div className="col-2">
                     <a href={link_to_profile}><img src={link_to_image} className="img-thumbnail mt-3" alt="Адаптивные изображения" /></a>
+                    <i><p className='text-left'>click to user page</p></i>
                     </div>
                     <div className="col-10">
                         <h2>{cookies.get("first_name")} {cookies.get("last_name")}</h2>
