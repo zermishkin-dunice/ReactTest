@@ -66,14 +66,11 @@ class UserPage extends React.Component {
             </h1>
             <p><i>{info.email}</i></p>
             {mine
-            && 
-<div>
-  <p>Сменить аватарку: </p>
-  <input type="file" className="form-control-file" onChange={this.avatarchange} id="avatar_change" />
-</div>
-
-
-
+            &&
+              <div>
+                <p>Сменить аватарку: </p>
+                <input type="file" className="form-control-file" onChange={this.avatarchange} id="avatar_change" />
+              </div>
             }
             {avatar && <p>Аватарка успешно изменена</p>}
           </div>

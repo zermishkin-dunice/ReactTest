@@ -35,9 +35,8 @@ const answerforava = data => {
 };
 const answerforcreatingauthor = data => ({ data, type: 'USER_CREATE' });
 const gettingauthor = data => ({ data, type: 'AUTHOR_GET' });
-const respAuthorInfo = data => ({data, type: 'AUTHOR_INFO'})
+const respAuthorInfo = data => ({ data, type: 'AUTHOR_INFO' });
 
-// Sagas' workers
 export function *getTotalAsync() {
   const data = yield call(() => axios.get(`${server}api/news/total/`));
 
@@ -120,6 +119,8 @@ export function *authorasync(info) {
 export function *authorInfoAsync(info) {
   const id = info.data;
   const data = yield call(() => axios.get(`${server}api/author/${id}`));
+
+
   yield put(respAuthorInfo(data.data));
 }
 

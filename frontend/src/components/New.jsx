@@ -46,8 +46,7 @@ class New extends React.Component {
         <img src={image} alt={title} className="rounded mx-auto d-block img-fluid" />
         {text}
         {' '}
-        <br />
-
+        
       </div>
     );
   }

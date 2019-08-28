@@ -11,7 +11,7 @@ class AddForm extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { correct: true, };
     this.typingtext = this.typingtext.bind(this);
     this.typingtitle = this.typingtitle.bind(this);
     this.sendnew = this.sendnew.bind(this);
@@ -40,12 +40,18 @@ class AddForm extends React.Component {
       title,
       token: cookies.get('token'),
     };
-
-
-    send(data);
+    if (text && title && file){
+      this.setState({correct: true,});
+      send(data);
+    }
+    else{
+      this.setState({correct: false,});
+    }
   }
 
   render() {
+    const {correct} = this.state;
+    const {result} = this.props;
     return (
       <div
         className="modal fade"
@@ -92,12 +98,14 @@ class AddForm extends React.Component {
                 <button
                   type="button"
                   className="btn btn-primary mt-3 ml-1"
-                  data-dismiss="modal"
                   onClick={this.sendnew}
                 >
                   Отправить
+                  
                 </button>
               </form>
+              {!correct && <p>Стоит заполнить и заголовок, и тело, и файл не забыть приложить...</p>}
+              {result}
             </div>
           </div>
         </div>
@@ -116,6 +124,7 @@ const mapStateToProps = function(state) {
     page: state.page,
     total: state.total,
     user: state.user,
+    result: state.resultofsending,
   };
 };
 
