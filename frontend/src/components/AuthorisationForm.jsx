@@ -21,6 +21,8 @@ class AuthForm extends React.Component {
       login,
       pass,
     };
+    const { authorize } = this.props;
+
 
     authorize(data);
   }

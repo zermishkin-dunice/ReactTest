@@ -55,7 +55,7 @@ class New extends React.Component {
 }
 
 New.propTypes = {
-  authors: PropTypes.objectOf,
+  authors: PropTypes.array,
   date: PropTypes.string,
   getAuthor2: PropTypes.func.isRequired,
   picture: PropTypes.string,

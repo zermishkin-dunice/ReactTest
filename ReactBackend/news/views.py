@@ -4,7 +4,6 @@ from django.http import JsonResponse
 from django.forms.models import model_to_dict
 from django.contrib.auth.models import User
 from .models import New, Avatar
-#from rest_framework.authentication import SessionAuthentication, BasicAuthentication, TokenAuthentication
 from django.contrib.auth import authenticate
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token

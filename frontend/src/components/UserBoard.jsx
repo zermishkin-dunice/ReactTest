@@ -1,8 +1,9 @@
 import React from 'react';
 import Cookies from 'universal-cookie';
 import { connect } from 'react-redux';
-import { logout, sendavatar } from './actions';
+import { logout } from './actions';
 import { server } from './News';
+import PropTypes from 'prop-types';
 
 
 const cookies = new Cookies();
@@ -13,12 +14,14 @@ class UserBoard extends React.Component {
     super(props);
     this.state = {};
     this.logout = this.logout.bind(this);
-    this.avatar_change = this.avatar_change.bind(this);
   }
 
   componentDidMount() {
-    if (this.props.token) {
-      cookies.set('token', this.props.token);
+    const { token } = this.props;
+
+
+    if (token) {
+      cookies.set('token', token);
     }
   }
 
@@ -28,29 +31,29 @@ class UserBoard extends React.Component {
     cookies.remove('last_name');
     cookies.remove('id');
     cookies.remove('username');
-    this.props.dispatch(logout());
-  }
+    const { logout: logoutpr } = this.props;
 
-  avatar_change(event) {
-    const data = {
-      token: cookies.get('token'),
-      file: event.target.files[0],
-    };
 
-    this.props.dispatch(sendavatar(data));
+    logoutpr();
   }
 
 
   render() {
-    const link_to_profile = `users/${cookies.get('id')}`;
+    const linktoprofile = `users/${cookies.get('id')}`;
 
-    const link_to_image = `${server}uploads/${cookies.get('avatar')}`;
+    const linktoimage = `${server}uploads/${cookies.get('avatar')}`;
 
     return (
       <div className="new border p-3 mt-3 rounded flex-fill">
         <div className="row">
           <div className="col-2">
-            <a href={link_to_profile}><img src={link_to_image} className="img-thumbnail mt-3" alt="Адаптивные изображения" /></a>
+            <a href={linktoprofile}>
+              <img
+                src={linktoimage}
+                className="img-thumbnail mt-3"
+                alt="Адаптивные изображения"
+              />
+            </a>
             <i><p className="text-left">click to user page</p></i>
           </div>
           <div className="col-10">
@@ -60,8 +63,21 @@ class UserBoard extends React.Component {
               {cookies.get('last_name')}
             </h2>
             <div className="btn-group" role="group" aria-label="Basic example">
-              <button type="button" className="btn btn-danger" onClick={this.logout}>Разлогиниться</button>
-              <button type="button" className="btn btn-info" data-toggle="modal" data-target="#exampleModal">Добавить новую новость</button>
+              <button
+                type="button"
+                className="btn btn-danger"
+                onClick={this.logout}
+              >
+Разлогиниться
+              </button>
+              <button
+                type="button"
+                className="btn btn-info"
+                data-toggle="modal"
+                data-target="#exampleModal"
+              >
+Добавить новую новость
+              </button>
             </div>
           </div>
         </div>
@@ -71,12 +87,28 @@ class UserBoard extends React.Component {
 
 }
 
+UserBoard.propTypes = {
+  logoutpr: PropTypes.func,
+  token: PropTypes.string,
+};
+
+UserBoard.defaultProps = {
+  logoutpr: null,
+  token: '',
+};
+
+
 const mapStateToProps = function(state) {
   return {
-    user: state.user,
-    token: state.token,
     avatar: state.avatar,
+    token: state.token,
+    user: state.user,
+
   };
 };
 
-export default connect(mapStateToProps)(UserBoard);
+const mapDispatchToProps = function(dispatch) {
+  return { logout: () => dispatch(logout()) };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserBoard);

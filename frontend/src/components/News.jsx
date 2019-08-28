@@ -26,7 +26,7 @@ class Container extends React.Component {
 
   componentWillMount() {
     const { page } = this.state;
-    const { gettotal: gettotalnews, getnewsonpage: getnews,  } = this.props;
+    const { gettotal: gettotalnews, getnewsonpage: getnews } = this.props;
 
     gettotalnews();
 
@@ -67,7 +67,7 @@ class Container extends React.Component {
 Container.propTypes = {
   getnewsonpage: PropTypes.func.isRequired,
   gettotal: PropTypes.func.isRequired,
-  news: PropTypes.objectOf.isRequired,
+  news: PropTypes.objectOf,
   total: PropTypes.number,
   resultofsending: PropTypes.string,
 };

@@ -56,7 +56,8 @@ class RegModal extends React.Component {
 
     if (username && password && firstname && lastname && email) {
       this.setState({ correct: true });
-      registrateaction(data);
+      const {registrateaction: registrate} = this.props;
+      registrate(data);
       this.setState({
         email: '',
         firstname: '',
@@ -140,9 +141,15 @@ class RegModal extends React.Component {
               </form>
               {!correct && <p className="mt-2">Нужно заполнить все поля, иначе ничего у нас не выйдет. </p>}
               {result
-                && <p className="mt-2">
-                  {result}
-                  <a href="#" data-dismiss="modal">Закрыть</a></p>}
+                && 
+<p className="mt-2">
+  {result}
+  <a href="#" data-dismiss="modal">Закрыть</a>
+</p>
+
+
+
+              }
 
             </div>
           </div>
@@ -158,13 +165,13 @@ RegModal.propTypes = { result: PropTypes.string };
 
 RegModal.defaultProps = { result: '', page: 1 };
 
-const mapDispatchToProps = function (dispatch) {
+const mapDispatchToProps = function(dispatch) {
   return { registrateaction: data => dispatch(registrateaction(data)) };
 };
 
-const mapStateToProps = function (state) {
+const mapStateToProps = function(state) {
   return {
-    result: state.user_create_result,
+    result: state.resultOfUserCreate,
     user: state.user,
   };
 };

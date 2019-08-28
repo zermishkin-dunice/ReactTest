@@ -25,8 +25,9 @@ class SearchForm extends React.Component {
 
 
         store.dispatch({
-          type: 'GET_NEWS',
           news: news_,
+          type: 'GET_NEWS',
+
         });
       });
   }
@@ -45,7 +46,7 @@ class SearchForm extends React.Component {
         <form onSubmit={this.onSubmit}>
           <input type="text" className="form-control" placeholder="Искать..." onChange={this.onChangeText} />
           <select className="form-control mt-3" onChange={this.onChangeSelect}>
->
+
             <option value="title">По заголовку</option>
             <option value="text">По содержимому</option>
           </select>

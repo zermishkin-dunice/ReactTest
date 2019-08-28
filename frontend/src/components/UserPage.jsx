@@ -2,9 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Navigation from './Navigation';
 import { server } from './News';
-import axios from 'axios';
 import Cookies from 'universal-cookie';
-import { sendavatar } from './actions';
+import { sendavatar, getAuthorInfo } from './actions';
+import PropTypes from 'prop-types';
+
 
 const cookies = new Cookies();
 
@@ -12,72 +13,69 @@ class UserPage extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { is_mine: false };
-    this.avatar_change = this.avatar_change.bind(this);
+    this.avatarchange = this.avatarchange.bind(this);
   }
 
   componentDidMount() {
-    axios.get(`${server}api/author/${this.props.match.params.id}`).then(response => this.setState({
-      username: response.data.username,
-      avatar: response.data.avatar,
-      firstname: response.data.first_name,
-      lastname: response.data.last_name,
-      email: response.data.email,
-      date_joined: response.data.date_joined,
-      id: response.data.id,
-    }));
+    const { getAuthorInfo: getInfo, match } = this.props;
+
+
+    getInfo(match.params.id);
   }
 
-  avatar_change(event) {
+  avatarchange(event) {
     const data = {
-      token: cookies.get('token'),
       file: event.target.files[0],
+      token: cookies.get('token'),
     };
+    const { sendavatar: send } = this.props;
 
-    this.props.dispatch(sendavatar(data));
+
+    send(data);
   }
 
 
   render() {
+    const { info, avatar } = this.props;
+
+
     let linktoimage = '';
 
+    let mine = false;
 
-    if (this.props.avatar) {
-      linktoimage = `${server}uploads/${this.props.avatar}`;
+
+    if (avatar) {
+      linktoimage = `${server}uploads/${avatar}`;
     } else {
-      linktoimage = `${server}uploads/${this.state.avatar}`;
+      linktoimage = `${server}uploads/${info.avatar}`;
     }
-
-    const is_mine = cookies.get('id') == this.state.id;
-
+    String(cookies.get('id')) === String(info.id) ? mine = true : mine = false;
 
     return (
       <div className="container">
         <Navigation />
         <div className="row">
           <div className="col">
-            <img src={linktoimage} />
+            <img src={linktoimage} alt={info.first_name} />
           </div>
           <div className="col">
             <h1 className="mt-5">
-              {this.state.firstname}
+              {info.first_name}
               {' '}
-              {this.state.lastname}
+              {info.last_name}
             </h1>
-            <p><i>{this.state.email}</i></p>
-            { is_mine
-                        && <div>
-  <label htmlFor="avatar_change">
-Сменить аватарку
-    <br />
-  </label>
-  <input type="file" className="form-control-file" onChange={this.avatar_change} id="avatar_change" />
+            <p><i>{info.email}</i></p>
+            {mine
+            && 
+<div>
+  <p>Сменить аватарку: </p>
+  <input type="file" className="form-control-file" onChange={this.avatarchange} id="avatar_change" />
 </div>
 
 
-            }
-            { this.props.avatar && <p>Аватарка успешно изменена</p>}
 
+            }
+            {avatar && <p>Аватарка успешно изменена</p>}
           </div>
         </div>
       </div>
@@ -86,12 +84,38 @@ class UserPage extends React.Component {
 
 }
 
+UserPage.propTypes = {
+  avatar: PropTypes.string,
+  getAuthorInfo: PropTypes.func.isRequired,
+  info: PropTypes.objectOf,
+  match: PropTypes.objectOf.isRequired,
+  sendavatar: PropTypes.func.isRequired,
+};
+
+UserPage.defaultProps = {
+  avatar: '',
+  info: {
+    avatar: '',
+    email: '',
+    firstname: '',
+    lastname: '',
+  },
+};
+
 const mapStateToProps = function(state) {
   return {
-    user: state.user,
-    token: state.token,
     avatar: state.avatar,
+    info: state.authorInfo,
+    token: state.token,
+    user: state.user,
   };
 };
 
-export default connect(mapStateToProps)(UserPage);
+const mapDispatchToProps = function(dispatch) {
+  return {
+    getAuthorInfo: data => dispatch(getAuthorInfo(data)),
+    sendavatar: data => dispatch(sendavatar(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(UserPage);
