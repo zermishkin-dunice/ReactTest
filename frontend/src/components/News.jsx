@@ -11,7 +11,7 @@ import Cookies from 'universal-cookie';
 import AddNewModal from './AddNewModal';
 import PropTypes from 'prop-types';
 
-export const newsonpage = 10;
+export const newsonpage = 5;
 export const server = 'http://127.0.0.1:8000/';
 
 
@@ -52,7 +52,7 @@ class Container extends React.Component {
         {
           news
           && news.length !== 0
-          && news.map(item => <New key={item.id} title={item.title} text={item.text} author={item.author} date={item.date} picture={item.picture} />)
+          && news.map(item => <New key={item.id} title={item.title} text={item.text} writer={item.author} date={item.date} picture={item.picture} />)
         }
         {news && news.length !== 0 && <Pagination total={total} />}
 

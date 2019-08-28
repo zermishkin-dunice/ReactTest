@@ -47,7 +47,14 @@ class AddForm extends React.Component {
 
   render() {
     return (
-      <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
         <div className="modal-dialog" role="document">
           <div className="modal-content">
             <div className="modal-header">
@@ -58,12 +65,38 @@ class AddForm extends React.Component {
             </div>
             <div className="modal-body">
               <form>
-                <input type="text" className="form-control" placeholder="Заголовок" onChange={this.typingtitle} />
-                <textarea className="form-control mt-3" placeholder="Тело новости" onChange={this.typingtext} />
-                <input type="file" className="form-control" placeholder="Картинка к новости" onChange={this.picturechange} />
-
-                <button type="button" className="btn btn-secondary mt-3" data-dismiss="modal">Передумал</button>
-                <button type="button" className="btn btn-primary mt-3 ml-1" data-dismiss="modal" onClick={this.sendnew}>Отправить</button>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Заголовок"
+                  onChange={this.typingtitle}
+                />
+                <textarea
+                  className="form-control mt-3"
+                  placeholder="Тело новости"
+                  onChange={this.typingtext}
+                />
+                <input
+                  type="file"
+                  className="form-control"
+                  placeholder="Картинка к новости"
+                  onChange={this.picturechange}
+                />
+                <button
+                  type="button"
+                  className="btn btn-secondary mt-3"
+                  data-dismiss="modal"
+                >
+                  Передумал
+                </button>
+                <button
+                  type="button"
+                  className="btn btn-primary mt-3 ml-1"
+                  data-dismiss="modal"
+                  onClick={this.sendnew}
+                >
+                  Отправить
+                </button>
               </form>
             </div>
           </div>
@@ -74,15 +107,15 @@ class AddForm extends React.Component {
 
 }
 
-AddForm.propTypes = { sendingnews: PropTypes.func.isRequired, page: PropTypes.number };
+AddForm.propTypes = { page: PropTypes.number, sendingnews: PropTypes.func.isRequired };
 AddForm.defaultProps = { page: 1 };
 
 const mapStateToProps = function(state) {
   return {
-    user: state.user,
-    total: state.total,
-    page: state.page,
     news: state.news,
+    page: state.page,
+    total: state.total,
+    user: state.user,
   };
 };
 

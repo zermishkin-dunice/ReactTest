@@ -1,9 +1,9 @@
 import React from 'react';
-import axios from 'axios';
-import Cookies from 'universal-cookie';
 import { server } from './News';
-
-const cookies = new Cookies();
+import { connect } from 'react-redux';
+import { author } from './actions';
+import PropTypes from 'prop-types';
+import _ from 'lodash';
 
 class New extends React.Component {
 
@@ -12,45 +12,39 @@ class New extends React.Component {
     this.state = {};
   }
 
-  get_author(id) {
-    axios.get(`${server}api/author/${this.props.author}`)
-      .then(res => {
-        this.setState({
-          author_name: res.data.first_name,
-          author_surname: res.data.last_name,
-
-        });
-      });
-  }
-
   componentDidMount() {
-    this.get_author(this.props.id);
+    const { getAuthor2, writer } = this.props;
+
+
+    getAuthor2(writer);
   }
 
   render() {
-    const image_scr = `${server}uploads/${this.props.picture}`;
-
-    const link = `users/${this.props.author}`;
+    const { authors, picture, writer, date, title, text } = this.props;
+    const image = `${server}uploads/${picture}`;
+    const link = `users/${writer}`;
+    const authorInstance = _.find(authors, { id: writer });
+    const fn = _.get(authorInstance, 'first_name', 'Имя');
+    const ln = _.get(authorInstance, 'last_name', 'Имя');
 
 
     return (
       <div className="new border p-3 mt-3 rounded">
-        <h1>{this.props.title}</h1>
+        <h1>{title}</h1>
         <i>
           <p className="font-italic">
             <a href={link}>
-              {this.state.author_name}
+              {fn}
               {' '}
-              {this.state.author_surname}
+              {ln}
             </a>
-,
+            ,
             {' '}
-            {this.props.date}
+            {date}
           </p>
         </i>
-
-        <img src={image_scr} alt={this.props.title} className="rounded mx-auto d-block img-fluid" />
-        {this.props.text}
+        <img src={image} alt={title} className="rounded mx-auto d-block img-fluid" />
+        {text}
         {' '}
         <br />
 
@@ -60,4 +54,32 @@ class New extends React.Component {
 
 }
 
-export default New;
+New.propTypes = {
+  authors: PropTypes.objectOf,
+  date: PropTypes.string,
+  getAuthor2: PropTypes.func.isRequired,
+  picture: PropTypes.string,
+  text: PropTypes.string,
+  title: PropTypes.string,
+  writer: PropTypes.string,
+};
+
+New.defaultProps = {
+  authors: [],
+  date: '',
+  picture: '',
+  text: '',
+  title: '',
+  writer: '',
+};
+
+const mapStateToProps = function(state) {
+  return { authors: state.authorlist };
+};
+
+const mapDispatchToProps = function(dispatch) {
+  return { getAuthor2: data => dispatch(author(data)) };
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(New);

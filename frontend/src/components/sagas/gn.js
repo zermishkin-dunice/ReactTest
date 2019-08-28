@@ -36,6 +36,8 @@ const answer_for_ava = data => {
 
 const answer_for_creating_author = data => ({ type: 'USER_CREATE', data });
 
+const getting_author = data => ({ type: 'AUTHOR_GET', data });
+
 
 // Sagas' watchers
 export function* get_total() {
@@ -61,24 +63,24 @@ export function* try_registrate(data) {
   yield takeEvery('REGISTRATE_PAGE', registrate_async);
 }
 
+export function* try_get_author(data) {
+  yield takeEvery('GET_AUTHOR_ON_PAGE', author_async);
+}
+
+
 // Sagas' workers
 export function* getTotalAsync() {
   const data = yield call(() => axios.get(`${server}api/news/total/`));
-
-  yield put(requestTotal(data.data));
+   yield put(requestTotal(data.data));
 }
 
 export function* getNewsAsync(data) {
-  console.log('hello fron worker');
   const response = yield call(() => axios.get(`${server}api/news/`, { params: { page: data.data.page, newsonpage: data.data.newsonpage } }));
-  console.log(response.data);
   yield put(request_news(response.data));
 }
 
 export function* autorizeAsync(info) {
   const data = yield call(() => axios.post(`${server}api/auth`, qs.stringify({ username: info.data.login, password: info.data.pass })));
-
-
   yield put(getting_token(data.data));
 }
 
@@ -115,7 +117,12 @@ export function* registrate_async(info) {
     lastname: info.data.lastname,
     email: info.data.email,
   })));
-
-
   yield put(answer_for_creating_author(data.data));
+}
+
+export function* author_async(info) {
+  let id = info.data;
+  const data = yield call(() => axios.get(`${server}api/author/${id}`));
+  let fullname = data.data.first_name + " " + data.data.last_name;
+  yield put(getting_author(data.data));
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { authorize } from './actions';
 import RegModal from './RegModal';
+import PropTypes from 'prop-types';
 
 class AuthForm extends React.Component {
 
@@ -9,42 +10,53 @@ class AuthForm extends React.Component {
     super(props);
     this.state = {};
     this.authorizate = this.authorizate.bind(this);
-    this.typing_login = this.typing_login.bind(this);
-    this.typing_password = this.typing_password.bind(this);
+    this.typinglogin = this.typinglogin.bind(this);
+    this.typingpassword = this.typingpassword.bind(this);
   }
 
   authorizate(event) {
     event.preventDefault();
+    const { login, pass } = this.state;
     const data = {
-      login: this.state.login,
-      pass: this.state.password,
+      login,
+      pass,
     };
 
-    this.props.dispatch(authorize(data));
-    this.setState({ user: this.props.user });
+    authorize(data);
   }
 
-  typing_login(event) {
+  typinglogin(event) {
     this.setState({ login: event.target.value });
   }
 
-  typing_password(event) {
-    this.setState({ password: event.target.value });
+  typingpassword(event) {
+    this.setState({ pass: event.target.value });
   }
 
 
   render() {
+    const { user } = this.props;
+
+
     return (
       <div className="new border p-3 mt-3 rounded flex-fill">
         <form>
-          <input type="text" className="form-control" placeholder="Логин" onChange={this.typing_login} />
-          <input type="password" className="form-control mt-3" placeholder="Пароль" onChange={this.typing_password} />
+          <input type="text" className="form-control" placeholder="Логин" onChange={this.typinglogin} />
+          <input type="password" className="form-control mt-3" placeholder="Пароль" onChange={this.typingpassword} />
           <div className="btn-group" role="group" aria-label="Basic example">
             <button type="submit" className="btn btn-primary mt-2" onClick={this.authorizate}>Авторизация</button>
-            <button type="button" className="btn btn-success mt-2" data-toggle="modal" data-target="#RegModal">Регистрация</button>
+            <button
+              type="button"
+              className="btn btn-success mt-2"
+              data-toggle="modal"
+              data-target="#RegModal"
+            >
+              Регистрация
+            </button>
           </div>
-          {this.props.user
-                        && <div className="alert alert-danger mt-2 ml-2 " role="alert">Неверный логин или пароль. Попробуй еще.</div>
+          {user && <div className="alert alert-danger mt-2 ml-2" role="alert">Неверный логин/пароль. Попробуй еще.</div>
+
+
           }
         </form>
         <RegModal />
@@ -59,4 +71,10 @@ const mapStateToProps = function(state) {
   return { user: state.user };
 };
 
-export default connect(mapStateToProps)(AuthForm);
+const mapDispatchToProps = function(dispatch) {
+  return { authorize: data => dispatch(authorize(data)) };
+};
+
+AuthForm.propTypes = { user: PropTypes.objectOf.isRequired };
+
+export default connect(mapStateToProps, mapDispatchToProps)(AuthForm);
