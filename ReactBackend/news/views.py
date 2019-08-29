@@ -25,8 +25,14 @@ class GetNews(TemplateView):
         lis = list(news.values('title', 'text',
                                'date', 'author', 'id', 'picture'))
         response = JsonResponse(lis, safe=False)
-        response['Access-Control-Allow-Origin'] = '*'
+        response['Access-Control-Allow-Origin'] = 'localhost'
+        response["Access-Control-Allow-Credentials"] = 'true'
         response['Total-news'] = len(New.objects.all())
+        return response
+    def options(self, request):
+        response = JsonResponse()
+        response['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+        response["Access-Control-Allow-Credentials"] = 'true'
         return response
 
 

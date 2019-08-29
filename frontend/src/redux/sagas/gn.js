@@ -5,6 +5,34 @@ import Cookies from 'universal-cookie';
 import { server, newsonpage } from '../../config/config';
 
 
+const request = ({
+  url = '',
+  pathname = '/api/',
+  method = 'GET',
+  query = '',
+  headers = {},
+  data,
+}) => new Promise(
+  (resolve, reject) => {
+    const options = {
+      url: url + pathname + query,
+      method,
+      headers,
+      withCredentials: true,
+    };
+    if (data) { options.data = data; }
+    axios(options)
+      .then(response => response.data)
+      .then((rdata) => {
+        if (!rdata.errors) resolve(rdata);
+        reject(Array.isArray(rdata.errors) ? rdata.errors[0] : rdata.errors);
+      })
+      .catch(e => reject(e));
+  },
+);
+
+export default request;
+
 const cookies = new Cookies();
 
 // Actions from Saga's
@@ -37,100 +65,90 @@ const answerforcreatingauthor = data => ({ data, type: 'USER_CREATE' });
 const gettingauthor = data => ({ data, type: 'AUTHOR_GET' });
 const respAuthorInfo = data => ({ data, type: 'AUTHOR_INFO' });
 
+//Saga's workers
+
 export function *getTotalAsync() {
-  const data = yield call(() => axios.get(`${server}api/news/total/`));
+  //const data = yield call(() => axios.get(`${server}api/news/total/`));
+  const response = yield call(request, {query: "news/total/"});
 
-
-  yield put(requestTotal(data.data));
+  yield put(requestTotal(response));
 }
 
 export function *getNewsAsync(data) {
-  const dt = { newsonpage: data.data.newsonpage, page: data.data.page };
+  const {newsonpage, page} = data.data;
 
-  const response = yield call(() => axios.get(`${server}api/news/`, { params: dt }));
-
-
-  yield put(requestnews(response.data));
+  //const response = yield call(() => axios.get(`${server}api/news/`, { params: dt }));
+  const response = yield call(request, {pathname: "api/news?", query: qs.stringify({page,newsonpage})});
+  yield put(requestnews(response));
 }
 
 export function *autorizeAsync(info) {
-  const dt = { password: info.data.pass, username: info.data.login };
+  const dt = qs.stringify({ password: info.data.pass, username: info.data.login });
 
-  const data = yield call(() => axios.post(`${server}api/auth`, qs.stringify(dt)));
+  //const data = yield call(() => axios.post(`${server}api/auth`, qs.stringify(dt)));
+  const response = yield call(request, {query: "auth", method: "POST", data: dt});
 
-
-  yield put(gettingtoken(data.data));
+  yield put(gettingtoken(response));
 }
 
 export function *sendingnewasync(info) {
-  const data = yield call(() => {
-    const fd = new FormData();
-
-
+  const fd = new FormData();
     fd.append('text', info.data.text);
     fd.append('title', info.data.title);
     fd.append('token', info.data.token);
     fd.append('file', info.data.file);
-
-    return axios.post(`${server}api/news/add`, fd);
-  });
-
-
-  yield put(answerforcreatingnew(data.data));
+  //const data = yield call(() => {return axios.post(`${server}api/news/add`, fd);
+  const response = yield call(request, {query: "news/add", method: "POST", data: fd});
+  yield put(answerforcreatingnew(response));
   yield put({ data: { newsonpage, page: info.data.page }, type: 'GET_NEWS_ON_PAGE' });
 }
 
 export function *sendingavaasync(info) {
-  const data = yield call(() => {
-    const fd = new FormData();
-
-
-    fd.append('file', info.data.file);
-    fd.append('token', info.data.token);
-
-    return axios.post(`${server}api/ava/change`, fd);
-  });
-
-
-  yield put(answerforava(data.data));
+  const fd = new FormData();
+  fd.append('file', info.data.file);
+  fd.append('token', info.data.token);
+  //const data = yield call(() => {return axios.post(`${server}api/ava/change`, fd);});
+  const response = yield call(request, {query: "ava/change", method: "POST", data: fd});
+  yield put(answerforava(response));
 }
 
 export function *registrateasync(info) {
-  const data = yield call(() => axios.post(`${server}api/author/add`, qs.stringify({
+  const dt = qs.stringify({
     email: info.data.email,
     firstname: info.data.firstname,
     lastname: info.data.lastname,
     password: info.data.password,
     username: info.data.username,
-  })));
+  });
+  //const data = yield call(() => axios.post(`${server}api/author/add`, dt));
+  const response = yield call(request, {query: "author/add", method: "POST", data: dt});
 
-
-  yield put(answerforcreatingauthor(data.data));
+  yield put(answerforcreatingauthor(response));
 }
 
 export function *authorasync(info) {
   const id = info.data;
-  const data = yield call(() => axios.get(`${server}api/author/${id}`));
+  //const data = yield call(() => axios.get(`${server}api/author/${id}`));
+  const response = yield call(request, {query: `author/${id}`});
 
-
-  yield put(gettingauthor(data.data));
+  yield put(gettingauthor(response));
 }
 
 export function *authorInfoAsync(info) {
   const id = info.data;
-  const data = yield call(() => axios.get(`${server}api/author/${id}`));
+  //const data = yield call(() => axios.get(`${server}api/author/${id}`));
+  const response = yield call(request, {query: `author/${id}`});
 
-
-  yield put(respAuthorInfo(data.data));
+  yield put(respAuthorInfo(response));
 }
 
 export function *searchAsync(info) {
   const {word, type} = info.data;
+  //const data = yield call(() => axios.get(`${server}api/news/search/`, {params: {word, type}}));
+  const response = yield call(request, {pathname: `api/news/search?`, query: qs.stringify({word,type})});
 
-  const data = yield call(() => axios.get(`${server}api/news/search/`, {params: {word, type}}));
 
-
-  yield put(requestnews(data.data));
+  yield put(requestnews(response));
 }
 
 
