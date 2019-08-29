@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Navigation from './Navigation';
-import { server } from './News';
+import { server } from '../config/config';
 import Cookies from 'universal-cookie';
 import { sendavatar, getAuthorInfo } from '../redux/actions';
 import PropTypes from 'prop-types';

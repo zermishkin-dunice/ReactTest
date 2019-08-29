@@ -10,9 +10,8 @@ import UserBoard from './UserBoard';
 import Cookies from 'universal-cookie';
 import AddNewModal from './AddNewModal';
 import PropTypes from 'prop-types';
+import { newsonpage } from '../config/config';
 
-export const newsonpage = 5;
-export const server = 'http://127.0.0.1:8000/';
 
 
 const cookies = new Cookies();

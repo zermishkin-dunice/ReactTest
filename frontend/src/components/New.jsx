@@ -1,5 +1,5 @@
 import React from 'react';
-import { server } from './News';
+import { server } from '../config/config';
 import { connect } from 'react-redux';
 import { author } from '../redux/actions';
 import PropTypes from 'prop-types';

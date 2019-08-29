@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { gettotal, getnewsonpage, pageaction } from '../redux/actions';
-import { newsonpage } from './News';
+import { newsonpage } from '../config/config';
 import PropTypes from 'prop-types';
 
 class Pagination extends React.Component {

@@ -2,7 +2,7 @@ import React from 'react';
 import Cookies from 'universal-cookie';
 import { connect } from 'react-redux';
 import { logout } from '../redux/actions';
-import { server } from './News';
+import { server } from '../config/config';
 import PropTypes from 'prop-types';
 
 
