@@ -57,6 +57,9 @@ saga.run(Sagas.trysendingava);
 saga.run(Sagas.tryregistrate);
 saga.run(Sagas.trygetauthor);
 saga.run(Sagas.tryGetAuthorInfo);
+saga.run(Sagas.trySearch);
+
+
 
 
 export default store;
