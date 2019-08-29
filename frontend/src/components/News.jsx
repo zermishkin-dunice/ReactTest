@@ -5,7 +5,7 @@ import SearchForm from './SearchForm';
 import New from './New';
 import Pagination from './Pagination';
 import AuthForm from './AuthorisationForm';
-import { gettotal, getnewsonpage } from './actions';
+import { gettotal, getnewsonpage } from '../redux/actions';
 import UserBoard from './UserBoard';
 import Cookies from 'universal-cookie';
 import AddNewModal from './AddNewModal';

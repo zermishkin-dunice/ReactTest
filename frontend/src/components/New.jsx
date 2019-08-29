@@ -1,7 +1,7 @@
 import React from 'react';
 import { server } from './News';
 import { connect } from 'react-redux';
-import { author } from './actions';
+import { author } from '../redux/actions';
 import PropTypes from 'prop-types';
 import _ from 'lodash';
 

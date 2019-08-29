@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Cookies from 'universal-cookie';
-import { sendingnews } from './actions';
+import { sendingnews } from '../redux/actions';
 import PropTypes from 'prop-types';
 
 

@@ -1,9 +1,6 @@
 import React from 'react';
-import store from './store';
 import { connect } from 'react-redux';
-import axios from 'axios';
-import { server } from './News';
-import { searching } from './actions';
+import { searching } from '../redux/actions';
 
 class SearchForm extends React.Component {
 

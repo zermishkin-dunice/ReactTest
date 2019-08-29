@@ -2,7 +2,7 @@ import axios from 'axios';
 import { put, takeEvery, call } from 'redux-saga/effects';
 import qs from 'qs';
 import Cookies from 'universal-cookie';
-import { server, newsonpage } from '../News';
+import { server, newsonpage } from '../../components/News';
 
 
 const cookies = new Cookies();
