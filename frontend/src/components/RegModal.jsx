@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { registrateaction } from './actions';
+import { registrateaction } from '../redux/actions';
 import PropTypes from 'prop-types';
 
 class RegModal extends React.Component {

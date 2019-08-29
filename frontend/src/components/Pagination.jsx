@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { gettotal, getnewsonpage, pageaction } from './actions';
+import { gettotal, getnewsonpage, pageaction } from '../redux/actions';
 import { newsonpage } from './News';
 import PropTypes from 'prop-types';
 

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { put, takeEvery, call } from 'redux-saga/effects';
 import qs from 'qs';
 import Cookies from 'universal-cookie';
-import { server, newsonpage } from '../News';
+import { server, newsonpage } from '../../components/News';
 
 
 const cookies = new Cookies();
@@ -124,6 +124,15 @@ export function *authorInfoAsync(info) {
   yield put(respAuthorInfo(data.data));
 }
 
+export function *searchAsync(info) {
+  const {word, type} = info.data;
+
+  const data = yield call(() => axios.get(`${server}api/news/search/`, {params: {word, type}}));
+
+
+  yield put(requestnews(data.data));
+}
+
 
 // Sagas' watchers
 export function *gettotal() {
@@ -155,4 +164,8 @@ export function *trygetauthor() {
 
 export function *tryGetAuthorInfo() {
   yield takeEvery('GET_AUTHOR_INFO_PAGE', authorInfoAsync);
+}
+
+export function *trySearch() {
+  yield takeEvery('SEARCH_PAGE', searchAsync);
 }

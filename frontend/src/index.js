@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import News from './components/News';
 import UserPage from './components/UserPage';
 import * as serviceWorker from './serviceWorker';
-import store from './components/store';
+import store from './redux/store';
 import { Provider } from 'react-redux';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
 

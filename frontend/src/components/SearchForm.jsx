@@ -1,8 +1,6 @@
 import React from 'react';
-import store from './store';
 import { connect } from 'react-redux';
-import axios from 'axios';
-import { server } from './News';
+import { searching } from '../redux/actions';
 
 class SearchForm extends React.Component {
 
@@ -19,17 +17,24 @@ class SearchForm extends React.Component {
 
   onSubmit(event) {
     event.preventDefault();
-    axios.get(`${server}api/news/search/?type=${this.state.search}&word=${this.state.word}`)
-      .then(res => {
-        const news_ = res.data;
+    // axios.get(`${server}api/news/search/?type=${this.state.search}&word=${this.state.word}`)
+    //   .then(res => {
+    //     const news_ = res.data;
 
 
-        store.dispatch({
-          news: news_,
-          type: 'GET_NEWS',
+    //     store.dispatch({
+    //       news: news_,
+    //       type: 'GET_NEWS',
 
-        });
-      });
+    //     });
+    //   });
+    const { search, word} = this.state;
+    const {searching: my_search} = this.props;
+    const data = {
+      type: search, 
+      word: word,
+    }
+    my_search(data);
   }
 
   onChangeSelect(event) {
@@ -46,7 +51,6 @@ class SearchForm extends React.Component {
         <form onSubmit={this.onSubmit}>
           <input type="text" className="form-control" placeholder="Искать..." onChange={this.onChangeText} />
           <select className="form-control mt-3" onChange={this.onChangeSelect}>
-
             <option value="title">По заголовку</option>
             <option value="text">По содержимому</option>
           </select>
@@ -62,4 +66,10 @@ const mapStateToProps = function(state) {
   return { news: state.news };
 };
 
-export default connect(mapStateToProps)(SearchForm);
+const mapDispatchToProps = function(dispatch){
+  return{ 
+    searching: (data) => dispatch(searching(data)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchForm);

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Navigation from './Navigation';
 import { server } from './News';
 import Cookies from 'universal-cookie';
-import { sendavatar, getAuthorInfo } from './actions';
+import { sendavatar, getAuthorInfo } from '../redux/actions';
 import PropTypes from 'prop-types';
 
 

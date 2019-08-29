@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { authorize } from './actions';
+import { authorize } from '../redux/actions';
 import RegModal from './RegModal';
 import PropTypes from 'prop-types';
 
